@@ -89,23 +89,21 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
     </nav>
 </header>
 
-<!-- ================= HERO ================= -->
+<!-- ================= HERO SECTION ================= -->
 <section class="hero" id="home">
-    <div class="slideshow">
-        <div class="slide active" style="background-image:url('images/hero1.png')"></div>
-        <div class="slide" style="background-image:url('images/hero2.png')"></div>
-        <div class="slide" style="background-image:url('images/hero3.png')"></div>
-        <div class="slide" style="background-image:url('images/hero4.png')"></div>
-
-    </div>
-    <div class="hero-content">
-        <h1>HYBRID VEHICLE SPARES</h1>
-        <p>Quality • Batteries • Modules</p>
-        <button class="cta-btn" id="bookServiceBtn">Book Service</button> 
-       
-    </div>
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('images/hero1.png')"></div>
+    <div class="slide" style="background-image:url('images/hero2.png')"></div>
+    <div class="slide" style="background-image:url('images/hero3.png')"></div>
+    <div class="slide" style="background-image:url('images/hero4.png')"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Hybrid Vehicle Spares</h1>
+    <p>Quality • Batteries • Modules</p>
+    <button class="cta-btn" onclick="showPage('#products')">Shop Now</button>
+  </div>
 </section>
-
+   
 <!-- ================= PRODUCTS ================= -->
 <section id="products" class="page hidden-section">
     <h2>Our Products</h2>
@@ -229,39 +227,31 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 const hero = document.querySelector(".hero");
 const pages = document.querySelectorAll(".page");
 const navLinks = document.querySelectorAll(".nav-link");
-
 function showPage(id){
   pages.forEach(p=>{
     p.classList.add("hidden-section");
     p.classList.remove("show");
   });
 
-  // Show hero only on home
   if(id === "#home"){
-    hero.classList.remove("hidden-section");
+    hero.classList.remove("hidden-section"); // show hero only on home
   } else {
-    hero.classList.add("hidden-section");
+    hero.classList.add("hidden-section"); // hide hero on other sections
   }
 
   if(id !== "#home"){
-    const page = document.querySelector(id);
+    const page=document.querySelector(id);
     if(page){
       page.classList.remove("hidden-section");
-      setTimeout(()=> page.classList.add("show"), 10);
+      setTimeout(()=> page.classList.add("show"),10);
     }
   }
 
-  // Update nav active state
-  navLinks.forEach(l => l.classList.remove("active"));
+  navLinks.forEach(l=>l.classList.remove("active"));
   document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-
-  // Update URL
   history.pushState(null,"",id);
 }
 
-
-navLinks.forEach(l=>l.onclick=e=>{e.preventDefault();showPage(l.getAttribute("href"))});
-showPage(location.hash||"#home");
 
 // Hero Slideshow
 const slides=document.querySelectorAll(".slide");
