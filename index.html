@@ -17,10 +17,7 @@ display:flex;justify-content:space-between;align-items:center;
 background:#222;color:#fff;padding:15px 20px;position:sticky;top:0;z-index:1000
 }
 .logo-container{display:flex;align-items:center}
-.logo {
-  height: 150px;
-  display: block;
-}
+.logo{height:150px;display:block}
 
 nav a,nav button{color:#fff;background:none;border:none;margin-left:15px;cursor:pointer}
 nav a.active{color:#00aaff;border-bottom:2px solid #00aaff}
@@ -35,7 +32,7 @@ nav a,nav button{padding:15px;border-top:1px solid #333}
 }
 
 /* HERO */
-.hero{height:400px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;overflow:hidden}
+.hero{height:400px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;overflow:hidden; z-index:1;}
 .slideshow,.slide{position:absolute;inset:0}
 .slide{background-size:cover;background-position:center;opacity:0;transition:opacity 1s}
 .slide.active{opacity:1}
@@ -76,17 +73,16 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
     <img src="images/logo.png" class="logo" alt="Hybrid Centre Logo">
     <h2>HYBRID CENTRE</h2>
   </div>
-    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
-
-    <nav>
-        <a href="#home" class="nav-link">Home</a>
-        <a href="#products" class="nav-link">Products</a>
-        <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-        <a href="#payment" class="nav-link">Payment</a>
-        <a href="#location" class="nav-link">Location</a>
-        <a href="#contact" class="nav-link">Contact</a>
-        <button id="adminLoginBtn">Admin</button>
-    </nav>
+  <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+  <nav>
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#payment" class="nav-link">Payment</a>
+    <a href="#location" class="nav-link">Location</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button id="adminLoginBtn">Admin</button>
+  </nav>
 </header>
 
 <!-- ================= HERO SECTION ================= -->
@@ -103,7 +99,7 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
     <button class="cta-btn" onclick="showPage('#products')">Shop Now</button>
   </div>
 </section>
-   
+
 <!-- ================= PRODUCTS ================= -->
 <section id="products" class="page hidden-section">
     <h2>Our Products</h2>
@@ -224,89 +220,94 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 
 <script>
 // SPA Navigation
+const hero = document.querySelector(".hero");
+const pages = document.querySelectorAll(".page");
+const navLinks = document.querySelectorAll(".nav-link");
 
-  document.addEventListener("DOMContentLoaded", () => {
-  const hero = document.querySelector(".hero");
-  const pages = document.querySelectorAll(".page");
-  const navLinks = document.querySelectorAll(".nav-link");
-
-  function showPage(id){
-    pages.forEach(p => { p.classList.add("hidden-section"); p.classList.remove("show"); });
-
-    if(id === "#home"){
-      hero.classList.remove("hidden-section");
-    } else {
-      hero.classList.add("hidden-section");
-    }
-
-    if(id !== "#home"){
-      const page = document.querySelector(id);
-      if(page){
-        page.classList.remove("hidden-section");
-        setTimeout(()=> page.classList.add("show"),10);
-      }
-    }
-
-    navLinks.forEach(l => l.classList.remove("active"));
-    document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-    history.pushState(null,"",id);
-  }
-
-  // Attach nav link clicks
-  navLinks.forEach(link => {
-    link.addEventListener("click", e => {
-      e.preventDefault();
-      const target = link.getAttribute("href");
-      showPage(target);
-    });
+function showPage(id){
+  pages.forEach(p=>{
+    p.classList.add("hidden-section");
+    p.classList.remove("show");
   });
 
-  // Show default page on load
-  showPage(location.hash || "#home");
+  if(id === "#home"){
+    hero.classList.remove("hidden-section");
+  } else {
+    hero.classList.add("hidden-section");
+  }
+
+  if(id !== "#home"){
+    const page=document.querySelector(id);
+    if(page){
+      page.classList.remove("hidden-section");
+      setTimeout(()=> page.classList.add("show"),10);
+    }
+  }
+
+  navLinks.forEach(l=>l.classList.remove("active"));
+  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
+
+  history.pushState(null,"",id);
+}
+
+// Attach nav clicks
+navLinks.forEach(link=>{
+  link.addEventListener("click", e=>{
+    e.preventDefault();
+    const target = link.getAttribute("href");
+    showPage(target);
+  });
 });
 
+// Show default page
+document.addEventListener("DOMContentLoaded", ()=>showPage(location.hash || "#home"));
 
 // Hero Slideshow
 const slides=document.querySelectorAll(".slide");
 let s=0;
-setInterval(()=>{if(!hero.classList.contains("hidden-section")){
-slides.forEach(sl=>sl.classList.remove("active"));
-s=(s+1)%slides.length;
-slides[s].classList.add("active");
-}},5000);
+setInterval(()=>{
+  if(!hero.classList.contains("hidden-section")){
+    slides.forEach(sl=>sl.classList.remove("active"));
+    s=(s+1)%slides.length;
+    slides[s].classList.add("active");
+  }
+},5000);
 
 // Cart
 let cart = [];
 document.querySelectorAll(".add-to-cart-btn").forEach(btn=>{
-btn.addEventListener("click", ()=>{
-cart.push({name: btn.dataset.name, price: Number(btn.dataset.price)});
-updateCart();
-});
+  btn.addEventListener("click", ()=>{
+    cart.push({name: btn.dataset.name, price: Number(btn.dataset.price)});
+    updateCart();
+  });
 });
 
 function updateCart(){
-const cartItems=document.getElementById("cart-items");
-let total=0;
-cartItems.innerHTML="";
-cart.forEach(item=>{cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price;});
-document.getElementById("cart-count").textContent=cart.length;
-document.getElementById("cart-total").textContent=`Total: KES ${total}`;
+  const cartItems=document.getElementById("cart-items");
+  let total=0;
+  cartItems.innerHTML="";
+  cart.forEach(item=>{
+    cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`;
+    total+=item.price;
+  });
+  document.getElementById("cart-count").textContent=cart.length;
+  document.getElementById("cart-total").textContent=`Total: KES ${total}`;
 }
 
 // Checkout Paybill
 document.getElementById("checkoutPaybill").onclick=()=>{
-if(cart.length===0) return alert("Your cart is empty!");
-document.getElementById("paybill-info").classList.remove("hidden-section");
+  if(cart.length===0) return alert("Your cart is empty!");
+  document.getElementById("paybill-info").classList.remove("hidden-section");
 }
 
 // WhatsApp confirmation
 document.getElementById("confirmPaymentBtn").onclick=()=>{
-if(cart.length===0) return alert("Your cart is empty!");
-let msg="Payment Confirmation for Order:%0A";
-let total=0;
-cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price;});
-msg+=`Total Paid: KES ${total}`;
-window.open(`https://wa.me/254780328599?text=${msg}`);
+  if(cart.length===0) return alert("Your cart is empty!");
+  let msg="Payment Confirmation for Order:%0A";
+  let total=0;
+  cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price;});
+  msg+=`Total Paid: KES ${total}`;
+  window.open(`https://wa.me/254780328599?text=${msg}`);
 };
 
 // Book Service button
@@ -317,11 +318,11 @@ const modal=document.getElementById("adminModal");
 document.getElementById("adminLoginBtn").onclick=()=>modal.classList.remove("hidden");
 document.getElementById("closeAdmin").onclick=()=>modal.classList.add("hidden");
 document.getElementById("addProductBtn").onclick=()=>{
-const name=document.getElementById("admin-name").value;
-const price=+document.getElementById("admin-price").value;
-if(name && price){cart.push({name,price}); updateCart();}
-document.getElementById("admin-name").value="";
-document.getElementById("admin-price").value="";
+  const name=document.getElementById("admin-name").value;
+  const price=+document.getElementById("admin-price").value;
+  if(name && price){cart.push({name,price}); updateCart();}
+  document.getElementById("admin-name").value="";
+  document.getElementById("admin-price").value="";
 };
 </script>
 
