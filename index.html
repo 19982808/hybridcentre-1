@@ -96,7 +96,7 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 </div>
 <div class="hero-content">
 <h1>Hybrid Vehicle Spares</h1>
-<p>Quality • Batteries • Modules</p>
+<p>Quality • Batteries • Modules • Accessories</p>
 <button class="cta-btn" id="bookServiceBtn">Book Service</button>
 </div>
 </section>
@@ -155,9 +155,20 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 <script>
 /* DATA */
 let products = [
-{name:"Hybrid Battery",price:500},
-{name:"Inverter",price:400}
+{name:"Hybrid Battery 12V 100Ah",price:12000},
+{name:"Hybrid Battery 24V 50Ah",price:15000},
+{name:"Inverter 3kW",price:18000},
+{name:"DC-DC Converter",price:8000},
+{name:"Battery Management Module",price:12000},
+{name:"Hybrid ECU Module",price:25000},
+{name:"Regenerative Braking Module",price:22000},
+{name:"Cooling Fan Assembly",price:3500},
+{name:"Hybrid Fuse Box",price:4500},
+{name:"High Voltage Cables Set",price:6000},
+{name:"Battery Terminal Kit",price:1200},
+{name:"Hybrid Sensor Pack",price:8000}
 ];
+
 let cart = [];
 
 /* NAV SPA */
@@ -209,13 +220,13 @@ function updateCart(){
 document.getElementById("cart-count").textContent=cart.length;
 const c=document.getElementById("cart-items");
 c.innerHTML="";
-cart.forEach(i=>c.innerHTML+=`${i.name} - ${i.price}<br>`);
+cart.forEach(i=>c.innerHTML+=`${i.name} - KES ${i.price}<br>`);
 }
 document.getElementById("payNowBtn").onclick=()=>{
 let msg="Order:%0A";
 let total=0;
-cart.forEach(i=>{msg+=`${i.name} - ${i.price}%0A`;total+=i.price});
-window.open(`https://wa.me/254780328599?text=${msg}Total:${total}`);
+cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`;total+=i.price});
+window.open(`https://wa.me/254780328599?text=${msg}Total: KES ${total}`);
 };
 
 /* BOOK SERVICE BUTTON */
@@ -228,8 +239,7 @@ document.getElementById("closeAdmin").onclick=()=>modal.classList.add("hidden");
 document.getElementById("addProductBtn").onclick=()=>{
 const name=document.getElementById("admin-name").value;
 const price=+document.getElementById("admin-price").value;
-products.push({name,price});
-render();
+if(name && price){products.push({name,price}); render();}
 document.getElementById("admin-name").value="";
 document.getElementById("admin-price").value="";
 };
