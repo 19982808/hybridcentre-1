@@ -165,20 +165,20 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
 
 <script>
-/* DATA */
+/* ORIGINAL PRODUCT IMAGES */
 let products = [
-{name:"Hybrid Battery 12V 100Ah",price:12000,img:"https://via.placeholder.com/300x150?text=Battery+12V"},
-{name:"Hybrid Battery 24V 50Ah",price:15000,img:"https://via.placeholder.com/300x150?text=Battery+24V"},
-{name:"Inverter 3kW",price:18000,img:"https://via.placeholder.com/300x150?text=Inverter+3kW"},
-{name:"DC-DC Converter",price:8000,img:"https://via.placeholder.com/300x150?text=DC-DC"},
-{name:"Battery Management Module",price:12000,img:"https://via.placeholder.com/300x150?text=BMS"},
-{name:"Hybrid ECU Module",price:25000,img:"https://via.placeholder.com/300x150?text=ECU"},
-{name:"Regenerative Braking Module",price:22000,img:"https://via.placeholder.com/300x150?text=Brake+Module"},
-{name:"Cooling Fan Assembly",price:3500,img:"https://via.placeholder.com/300x150?text=Fan"},
-{name:"Hybrid Fuse Box",price:4500,img:"https://via.placeholder.com/300x150?text=Fuse+Box"},
-{name:"High Voltage Cables Set",price:6000,img:"https://via.placeholder.com/300x150?text=Cables"},
-{name:"Battery Terminal Kit",price:1200,img:"https://via.placeholder.com/300x150?text=Terminals"},
-{name:"Hybrid Sensor Pack",price:8000,img:"https://via.placeholder.com/300x150?text=Sensors"}
+{name:"Hybrid Battery 12V 100Ah",price:12000,img:"image/product1.png"},
+{name:"Hybrid Battery 24V 50Ah",price:15000,img:"image/product2.png"},
+{name:"Inverter 3kW",price:18000,img:"image/product3.png"},
+{name:"DC-DC Converter",price:8000,img:"image/product4.png"},
+{name:"Battery Management Module",price:12000,img:"image/product5.png"},
+{name:"Hybrid ECU Module",price:25000,img:"image/product6.png"},
+{name:"Regenerative Braking Module",price:22000,img:"image/product7.png"},
+{name:"Cooling Fan Assembly",price:3500,img:"image/product8.png"},
+{name:"Hybrid Fuse Box",price:4500,img:"image/product9.png"},
+{name:"High Voltage Cables Set",price:6000,img:"image/product10.png"},
+{name:"Battery Terminal Kit",price:1200,img:"image/product11.png"},
+{name:"Hybrid Sensor Pack",price:8000,img:"image/product12.png"}
 ];
 
 let cart = [];
@@ -263,7 +263,7 @@ document.getElementById("closeAdmin").onclick=()=>modal.classList.add("hidden");
 document.getElementById("addProductBtn").onclick=()=>{
 const name=document.getElementById("admin-name").value;
 const price=+document.getElementById("admin-price").value;
-if(name && price){products.push({name,price,img:"https://via.placeholder.com/300x150?text=New+Product"}); render();}
+if(name && price){products.push({name,price,img:"image/placeholder.png"}); render();}
 document.getElementById("admin-name").value="";
 document.getElementById("admin-price").value="";
 };
