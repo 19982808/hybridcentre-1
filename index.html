@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hybrid Spares Shop</title>
-
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Arial,sans-serif}
 body{background:#f5f5f5;color:#333}
@@ -66,44 +64,41 @@ section{padding:40px 20px;max-width:1200px;margin:auto}
 footer{text-align:center;padding:20px;background:#222;color:#fff}
 </style>
 </head>
-
 <body>
 
+<!-- ================= HEADER / NAV ================= -->
 <header class="site-header">
-<div class="logo-container">
-  <img src="image/new-logo.png" class="logo" alt="Hybrid Logo"
-       onerror="this.onerror=null;this.src='https://via.placeholder.com/150x45?text=Logo';">
-  <h2>Hybrid Spares Shop</h2>
-</div>
+    <div class="logo-container">
+        <img src="images/logo.png" alt="Logo" class="logo">
+        <h1>HYBRID CENTRE</h1>
+    </div>
 
-<button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+    <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
 
-<nav>
-  <a href="#home" class="nav-link">Home</a>
-  <a href="#products" class="nav-link">Products</a>
-  <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-  <a href="#payment" class="nav-link">Payment</a>
-  <a href="#location" class="nav-link">Location</a>
-  <a href="#contact" class="nav-link">Contact</a>
-  <button id="adminLoginBtn">Admin</button>
-</nav>
+    <nav>
+        <a href="#home" class="nav-link">Home</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+        <a href="#payment" class="nav-link">Payment</a>
+        <a href="#location" class="nav-link">Location</a>
+        <a href="#contact" class="nav-link">Contact</a>
+        <button id="adminLoginBtn">Admin</button>
+    </nav>
 </header>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 <section class="hero" id="home">
-  <div class="slideshow">
-    <div class="slide active" style="background-image:url('image/hero-new1.png');"
-         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+1)';"></div>
-    <div class="slide" style="background-image:url('image/hero-new2.png');"
-         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+2)';"></div>
-    <div class="slide" style="background-image:url('image/hero-new3.png');"
-         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+3)';"></div>
-  </div>
-  <div class="hero-content">
-    <h1>Hybrid Vehicle Spares</h1>
-    <p>Quality • Batteries • Modules • Accessories</p>
-    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
-  </div>
+    <div class="slideshow">
+        <div class="slide active" style="background-image:url('images/hero1.png')"></div>
+        <div class="slide" style="background-image:url('images/hero2.png')"></div>
+        <div class="slide" style="background-image:url('images/hero3.png')"></div>
+        <div class="slide" style="background-image:url('images/hero4.png')"></div>
+    </div>
+    <div class="hero-content">
+        <h1>HYBRID VEHICLE SPARES</h1>
+        <p>Quality • Batteries • Modules</p>
+        <button class="cta-btn" id="bookServiceBtn">Book Service</button>
+    </div>
 </section>
 
 <!-- ================= PRODUCTS ================= -->
@@ -169,7 +164,7 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
     </div>
 </section>
 
-<!-- CART -->
+<!-- ================= CART ================= -->
 <section id="cart" class="page hidden-section">
 <h2>Your Cart</h2>
 <div id="cart-items"></div>
@@ -189,11 +184,13 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 </div>
 </section>
 
+<!-- ================= PAYMENT ================= -->
 <section id="payment" class="page hidden-section">
 <h2>Payment</h2>
 <p>Payment is via M-Pesa Paybill only. See cart checkout for details.</p>
 </section>
 
+<!-- ================= LOCATION ================= -->
 <section id="location" class="page hidden-section">
 <h2>Location</h2>
 <p>Kirinyaga Road, behind Indian Mosque, Grogon Lane, Nairobi</p>
@@ -201,13 +198,14 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+Lane+Nairobi&output=embed"></iframe>
 </section>
 
+<!-- ================= CONTACT ================= -->
 <section id="contact" class="page hidden-section">
 <h2>Contact</h2>
 <p>Call us: <a href="tel:+254780328599">+254 780 328 599</a></p>
 <p>WhatsApp: <a href="https://wa.me/254780328599" target="_blank">Chat with us</a></p>
 </section>
 
-<!-- ADMIN -->
+<!-- ================= ADMIN ================= -->
 <div class="modal hidden" id="adminModal">
 <div class="modal-content">
 <span class="close" id="closeAdmin">&times;</span>
@@ -251,7 +249,6 @@ slides[s].classList.add("active");
 
 // Cart
 let cart = [];
-
 document.querySelectorAll(".add-to-cart-btn").forEach(btn=>{
 btn.addEventListener("click", ()=>{
 cart.push({name: btn.dataset.name, price: Number(btn.dataset.price)});
