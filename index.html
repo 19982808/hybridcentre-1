@@ -224,33 +224,46 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 
 <script>
 // SPA Navigation
-const hero = document.querySelector(".hero");
-const pages = document.querySelectorAll(".page");
-const navLinks = document.querySelectorAll(".nav-link");
-function showPage(id){
-  pages.forEach(p=>{
-    p.classList.add("hidden-section");
-    p.classList.remove("show");
+
+  document.addEventListener("DOMContentLoaded", () => {
+  const hero = document.querySelector(".hero");
+  const pages = document.querySelectorAll(".page");
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  function showPage(id){
+    pages.forEach(p => { p.classList.add("hidden-section"); p.classList.remove("show"); });
+
+    if(id === "#home"){
+      hero.classList.remove("hidden-section");
+    } else {
+      hero.classList.add("hidden-section");
+    }
+
+    if(id !== "#home"){
+      const page = document.querySelector(id);
+      if(page){
+        page.classList.remove("hidden-section");
+        setTimeout(()=> page.classList.add("show"),10);
+      }
+    }
+
+    navLinks.forEach(l => l.classList.remove("active"));
+    document.querySelector(`a[href="${id}"]`)?.classList.add("active");
+    history.pushState(null,"",id);
+  }
+
+  // Attach nav link clicks
+  navLinks.forEach(link => {
+    link.addEventListener("click", e => {
+      e.preventDefault();
+      const target = link.getAttribute("href");
+      showPage(target);
+    });
   });
 
-  if(id === "#home"){
-    hero.classList.remove("hidden-section"); // show hero only on home
-  } else {
-    hero.classList.add("hidden-section"); // hide hero on other sections
-  }
-
-  if(id !== "#home"){
-    const page=document.querySelector(id);
-    if(page){
-      page.classList.remove("hidden-section");
-      setTimeout(()=> page.classList.add("show"),10);
-    }
-  }
-
-  navLinks.forEach(l=>l.classList.remove("active"));
-  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-  history.pushState(null,"",id);
-}
+  // Show default page on load
+  showPage(location.hash || "#home");
+});
 
 
 // Hero Slideshow
