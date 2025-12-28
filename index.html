@@ -6,10 +6,23 @@
 <title>Hybrid Spares Shop</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Arial,sans-serif}
-body{background:#f5f5f5;color:#333}
-.hidden{display:none!important}
-.hidden-section{display:none}
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Poppins, Arial, sans-serif;
+}
+body {
+    background: #f5f5f5;
+    color: #000; /* Set body text color to black */
+    font-weight: bold; /* Set body text to bold */
+}
+.hidden {
+    display: none !important;
+}
+.hidden-section {
+    display: none;
+}
 /* HEADER / NAVBAR */
 .site-header {
     display: flex;
@@ -37,16 +50,44 @@ nav a.active {
     border-bottom: 2px solid #fff;
 }
 
-.logo-container { display: flex; align-items: center; }
-.logo { height: 200px; display: block; margin-right: 10px; }
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+.logo {
+    height: 200px;
+    display: block;
+    margin-right: 10px;
+}
 
 /* MOBILE */
-.menu-toggle { display: none; font-size: 22px; color: #fff; background: none; border: none; }
-@media(max-width:768px){
-    nav { display: none; flex-direction: column; background: #222; position: absolute; top: 100%; left: 0; right: 0; }
-    nav.open { display: flex; }
-    .menu-toggle { display: block; }
-    nav a, nav button { padding: 15px; border-top: 1px solid #333; }
+.menu-toggle {
+    display: none;
+    font-size: 22px;
+    color: #fff;
+    background: none;
+    border: none;
+}
+@media(max-width:768px) {
+    nav {
+        display: none;
+        flex-direction: column;
+        background: #222;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+    }
+    nav.open {
+        display: flex;
+    }
+    .menu-toggle {
+        display: block;
+    }
+    nav a, nav button {
+        padding: 15px;
+        border-top: 1px solid #333;
+    }
 }
 
 /* HERO */
@@ -61,11 +102,26 @@ nav a.active {
     overflow: hidden;
     z-index: 1;
 }
-.hero.hidden-section { display: none !important; }
-.slideshow, .slide { position: absolute; inset: 0; }
-.slide { background-size: cover; background-position: center; opacity: 0; transition: opacity 1s; }
-.slide.active { opacity: 1; }
-.hero-content { position: relative; z-index: 2; }
+.hero.hidden-section {
+    display: none !important;
+}
+.slideshow, .slide {
+    position: absolute;
+    inset: 0;
+}
+.slide {
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 1s;
+}
+.slide.active {
+    opacity: 1;
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
 
 /* SECTIONS */
 section {
@@ -88,19 +144,29 @@ section {
     padding: 15px;
     border-radius: 8px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,.1);
-    color: #000;          /* black text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    color: #000; /* black text */
     font-weight: bold;
 }
 
 .product h3,
 .product p,
 .product span {
-    color: #000;          /* force all headings and paragraphs inside product to black */
+    color: #000; /* force all headings and paragraphs inside product to black */
 }
 
-.product img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
-.product-icon { font-size: 50px; color: #0077cc; margin-bottom: 10px; }
+.product img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+.product-icon {
+    font-size: 50px;
+    color: #0077cc;
+    margin-bottom: 10px;
+}
 
 /* BUTTON */
 .cta-btn {
@@ -112,15 +178,41 @@ section {
     cursor: pointer;
     margin-top: 5px;
 }
-.cta-btn:hover { background: #005fa3; }
+.cta-btn:hover {
+    background: #005fa3;
+}
 
 /* CART */
-#cart-count { background: red; padding: 2px 6px; border-radius: 50%; font-size: 12px; }
+#cart-count {
+    background: red;
+    padding: 2px 6px;
+    border-radius: 50%;
+    font-size: 12px;
+}
 
 /* MODAL */
-.modal { position: fixed; inset: 0; background: rgba(0,0,0,.5); display: flex; align-items: center; justify-content: center; }
-.modal-content { background: #fff; padding: 20px; width: 90%; max-width: 600px; border-radius: 8px; max-height: 90vh; overflow: auto; }
-.close { float: right; font-size: 24px; cursor: pointer; }
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 8px;
+    max-height: 90vh;
+    overflow: auto;
+}
+.close {
+    float: right;
+    font-size: 24px;
+    cursor: pointer;
+}
 
 /* FOOTER */
 footer {
@@ -129,8 +221,6 @@ footer {
     background: #222;
     color: #4888C4; /* matches navbar blue */
 }
-
-
 </style>
 </head>
 <body>
@@ -293,103 +383,103 @@ const hero = document.querySelector(".hero");
 const pages = document.querySelectorAll(".page");
 const navLinks = document.querySelectorAll(".nav-link");
 
-function showPage(id){
-  pages.forEach(p=>{
+function showPage(id) {
+  pages.forEach(p => {
     p.classList.add("hidden-section");
     p.classList.remove("show");
   });
 
-  if(id === "#home"){
+  if (id === "#home") {
     hero.classList.remove("hidden-section");
   } else {
     hero.classList.add("hidden-section");
     const page = document.querySelector(id);
-    if(page){
+    if (page) {
       page.classList.remove("hidden-section");
-      setTimeout(()=> page.classList.add("show"),10);
+      setTimeout(() => page.classList.add("show"), 10);
     }
   }
 
-  navLinks.forEach(l=>l.classList.remove("active"));
+  navLinks.forEach(l => l.classList.remove("active"));
   document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-  history.pushState(null,"",id);
+  history.pushState(null, "", id);
 }
 
 // Hero slideshow
 const slides = document.querySelectorAll(".slide");
 let s = 0;
-setInterval(()=>{
-  if(!hero.classList.contains("hidden-section")){
-    slides.forEach(sl=>sl.classList.remove("active"));
-    s = (s+1)%slides.length;
+setInterval(() => {
+  if (!hero.classList.contains("hidden-section")) {
+    slides.forEach(sl => sl.classList.remove("active"));
+    s = (s + 1) % slides.length;
     slides[s].classList.add("active");
   }
-},5000);
+}, 5000);
 
 // Cart
 let cart = [];
-document.querySelectorAll(".add-to-cart-btn").forEach(btn=>{
-  btn.addEventListener("click", ()=>{
-    cart.push({name: btn.dataset.name, price: Number(btn.dataset.price)});
+document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    cart.push({ name: btn.dataset.name, price: Number(btn.dataset.price) });
     updateCart();
   });
 });
 
-function updateCart(){
-  const cartItems=document.getElementById("cart-items");
-  let total=0;
-  cartItems.innerHTML="";
-  cart.forEach(item=>{
-    cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`;
-    total+=item.price;
+function updateCart() {
+  const cartItems = document.getElementById("cart-items");
+  let total = 0;
+  cartItems.innerHTML = "";
+  cart.forEach(item => {
+    cartItems.innerHTML += `${item.name} - KES ${item.price}<br>`;
+    total += item.price;
   });
-  document.getElementById("cart-count").textContent=cart.length;
-  document.getElementById("cart-total").textContent=`Total: KES ${total}`;
+  document.getElementById("cart-count").textContent = cart.length;
+  document.getElementById("cart-total").textContent = `Total: KES ${total}`;
 }
 
 // Checkout Paybill
 const checkoutBtn = document.getElementById("checkoutPaybill");
-if(checkoutBtn){
-  checkoutBtn.onclick=()=>{
-    if(cart.length===0) return alert("Your cart is empty!");
+if (checkoutBtn) {
+  checkoutBtn.onclick = () => {
+    if (cart.length === 0) return alert("Your cart is empty!");
     document.getElementById("paybill-info").classList.remove("hidden-section");
   };
 }
 
 // WhatsApp confirmation
 const confirmBtn = document.getElementById("confirmPaymentBtn");
-if(confirmBtn){
-  confirmBtn.onclick=()=>{
-    if(cart.length===0) return alert("Your cart is empty!");
-    let msg="Payment Confirmation for Order:%0A";
-    let total=0;
-    cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price;});
-    msg+=`Total Paid: KES ${total}`;
+if (confirmBtn) {
+  confirmBtn.onclick = () => {
+    if (cart.length === 0) return alert("Your cart is empty!");
+    let msg = "Payment Confirmation for Order:%0A";
+    let total = 0;
+    cart.forEach(i => { msg += `${i.name} - KES ${i.price}%0A`; total += i.price; });
+    msg += `Total Paid: KES ${total}`;
     window.open(`https://wa.me/254780328599?text=${msg}`);
   };
 }
 
 // Book Service button
 const bookBtn = document.getElementById("bookServiceBtn");
-if(bookBtn){
-  bookBtn.onclick = ()=> showPage("#products");
+if (bookBtn) {
+  bookBtn.onclick = () => showPage("#products");
 }
 
 // Admin modal
-const modal=document.getElementById("adminModal");
+const modal = document.getElementById("adminModal");
 const adminBtn = document.getElementById("adminLoginBtn");
 const closeAdmin = document.getElementById("closeAdmin");
-if(adminBtn && modal){ adminBtn.onclick=()=> modal.classList.remove("hidden"); }
-if(closeAdmin && modal){ closeAdmin.onclick=()=> modal.classList.add("hidden"); }
+if (adminBtn && modal) { adminBtn.onclick = () => modal.classList.remove("hidden"); }
+if (closeAdmin && modal) { closeAdmin.onclick = () => modal.classList.add("hidden"); }
 
 const addProductBtn = document.getElementById("addProductBtn");
-if(addProductBtn){
-  addProductBtn.onclick=()=>{
-    const name=document.getElementById("admin-name").value;
-    const price=+document.getElementById("admin-price").value;
-    if(name && price){ cart.push({name, price}); updateCart(); }
-    document.getElementById("admin-name").value="";
-    document.getElementById("admin-price").value="";
+if (addProductBtn) {
+  addProductBtn.onclick = () => {
+    const name = document.getElementById("admin-name").value;
+    const price = +document.getElementById("admin-price").value;
+    if (name && price) { cart.push({ name, price }); updateCart(); }
+    document.getElementById("admin-name").value = "";
+    document.getElementById("admin-price").value = "";
   };
 }
 
@@ -398,15 +488,15 @@ showPage(location.hash || "#home");
 
 // Navbar toggle for mobile
 const menuToggle = document.getElementById("menuToggle");
-if(menuToggle){
-  menuToggle.onclick = ()=>{
+if (menuToggle) {
+  menuToggle.onclick = () => {
     document.querySelector("nav").classList.toggle("open");
   };
 }
 
 // SPA nav links
-navLinks.forEach(l=>{
-  l.addEventListener("click", e=>{
+navLinks.forEach(l => {
+  l.addEventListener("click", e => {
     e.preventDefault();
     showPage(l.getAttribute("href"));
     document.querySelector("nav").classList.remove("open");
