@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Hybrid Spares Shop</title>
 
-<link rel="preload" as="image" href="image/hero1.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 <style>
@@ -48,9 +47,10 @@ section{padding:40px 20px;max-width:1200px;margin:auto}
 /* PRODUCTS */
 .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .product{background:#fff;padding:15px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
+.product img{width:100%;height:150px;object-fit:cover;border-radius:5px;margin-bottom:10px}
 
 /* BUTTON */
-.cta-btn{padding:10px 20px;background:#0077cc;color:#fff;border:none;border-radius:5px;cursor:pointer}
+.cta-btn{padding:10px 20px;background:#0077cc;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px}
 .cta-btn:hover{background:#005fa3}
 
 /* CART */
@@ -70,35 +70,39 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 
 <header class="site-header">
 <div class="logo-container">
-<img src="image/logo.png" class="logo" alt="Hybrid Logo">
-<h2>Hybrid Spares Shop</h2>
+  <img src="image/new-logo.png" class="logo" alt="Hybrid Logo"
+       onerror="this.onerror=null;this.src='https://via.placeholder.com/150x45?text=Logo';">
+  <h2>Hybrid Spares Shop</h2>
 </div>
 
 <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
 
 <nav>
-<a href="#home" class="nav-link">Home</a>
-<a href="#products" class="nav-link">Products</a>
-<a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-<a href="#payment" class="nav-link">Payment</a>
-<a href="#location" class="nav-link">Location</a>
-<a href="#contact" class="nav-link">Contact</a>
-<button id="adminLoginBtn">Admin</button>
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#products" class="nav-link">Products</a>
+  <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+  <a href="#payment" class="nav-link">Payment</a>
+  <a href="#location" class="nav-link">Location</a>
+  <a href="#contact" class="nav-link">Contact</a>
+  <button id="adminLoginBtn">Admin</button>
 </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero" id="home">
-<div class="slideshow">
-<div class="slide active" style="background-image:url('hero1.png')"></div>
-<div class="slide" style="background-image:url('hero2.png')"></div>
-<div class="slide" style="background-image:url('hero3.png')"></div>
-</div>
-<div class="hero-content">
-<h1>Hybrid Vehicle Spares</h1>
-<p>Quality • Batteries • Modules • Accessories</p>
-<button class="cta-btn" id="bookServiceBtn">Book Service</button>
-</div>
+  <div class="slideshow">
+    <div class="slide active" style="background-image:url('image/hero-new1.png');"
+         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+1)';"></div>
+    <div class="slide" style="background-image:url('image/hero-new2.png');"
+         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+2)';"></div>
+    <div class="slide" style="background-image:url('image/hero-new3.png');"
+         onerror="this.style.backgroundImage='url(https://via.placeholder.com/1200x400?text=Hero+3)';"></div>
+  </div>
+  <div class="hero-content">
+    <h1>Hybrid Vehicle Spares</h1>
+    <p>Quality • Batteries • Modules • Accessories</p>
+    <button class="cta-btn" id="bookServiceBtn">Book Service</button>
+  </div>
 </section>
 
 <!-- PAGES -->
@@ -110,19 +114,27 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 <section id="cart" class="page hidden-section">
 <h2>Your Cart</h2>
 <div id="cart-items"></div>
-</section>
+<h3 id="cart-total">Total: KES 0</h3>
 
-<section id="payment" class="page hidden-section">
-<h2>Payment</h2>
-<p>Pay via WhatsApp:</p>
-<button class="cta-btn" id="payNowBtn">Pay via WhatsApp</button>
+<div class="cart-actions">
+<button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
+</div>
 
-<p>Or pay via M-Pesa Lipa Na Family:</p>
+<div id="paybill-info" class="hidden-section">
+<h4>Pay via M-Pesa Paybill</h4>
 <ul>
 <li>Paybill Number: <strong>222111</strong></li>
 <li>Account Number: <strong>5825469</strong></li>
 <li>Business Name: <strong>Hybrid Centre</strong></li>
 </ul>
+<p>After payment, click the button below to send confirmation via WhatsApp:</p>
+<button class="cta-btn" id="confirmPaymentBtn">Send Confirmation via WhatsApp</button>
+</div>
+</section>
+
+<section id="payment" class="page hidden-section">
+<h2>Payment</h2>
+<p>Payment is via M-Pesa Paybill only. See cart checkout for details.</p>
 </section>
 
 <section id="location" class="page hidden-section">
@@ -155,18 +167,18 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 <script>
 /* DATA */
 let products = [
-{name:"Hybrid Battery 12V 100Ah",price:12000},
-{name:"Hybrid Battery 24V 50Ah",price:15000},
-{name:"Inverter 3kW",price:18000},
-{name:"DC-DC Converter",price:8000},
-{name:"Battery Management Module",price:12000},
-{name:"Hybrid ECU Module",price:25000},
-{name:"Regenerative Braking Module",price:22000},
-{name:"Cooling Fan Assembly",price:3500},
-{name:"Hybrid Fuse Box",price:4500},
-{name:"High Voltage Cables Set",price:6000},
-{name:"Battery Terminal Kit",price:1200},
-{name:"Hybrid Sensor Pack",price:8000}
+{name:"Hybrid Battery 12V 100Ah",price:12000,img:"https://via.placeholder.com/300x150?text=Battery+12V"},
+{name:"Hybrid Battery 24V 50Ah",price:15000,img:"https://via.placeholder.com/300x150?text=Battery+24V"},
+{name:"Inverter 3kW",price:18000,img:"https://via.placeholder.com/300x150?text=Inverter+3kW"},
+{name:"DC-DC Converter",price:8000,img:"https://via.placeholder.com/300x150?text=DC-DC"},
+{name:"Battery Management Module",price:12000,img:"https://via.placeholder.com/300x150?text=BMS"},
+{name:"Hybrid ECU Module",price:25000,img:"https://via.placeholder.com/300x150?text=ECU"},
+{name:"Regenerative Braking Module",price:22000,img:"https://via.placeholder.com/300x150?text=Brake+Module"},
+{name:"Cooling Fan Assembly",price:3500,img:"https://via.placeholder.com/300x150?text=Fan"},
+{name:"Hybrid Fuse Box",price:4500,img:"https://via.placeholder.com/300x150?text=Fuse+Box"},
+{name:"High Voltage Cables Set",price:6000,img:"https://via.placeholder.com/300x150?text=Cables"},
+{name:"Battery Terminal Kit",price:1200,img:"https://via.placeholder.com/300x150?text=Terminals"},
+{name:"Hybrid Sensor Pack",price:8000,img:"https://via.placeholder.com/300x150?text=Sensors"}
 ];
 
 let cart = [];
@@ -208,7 +220,7 @@ list.innerHTML="";
 products.forEach(p=>{
 const d=document.createElement("div");
 d.className="product";
-d.innerHTML=`<h3>${p.name}</h3><p>KES ${p.price}</p><button class="cta-btn">Add</button>`;
+d.innerHTML=`<img src="${p.img}" alt="${p.name}"><h3>${p.name}</h3><p>KES ${p.price}</p><button class="cta-btn">Add</button>`;
 d.querySelector("button").onclick=()=>{cart.push(p);updateCart()};
 list.appendChild(d);
 });
@@ -217,16 +229,28 @@ render();
 
 /* CART */
 function updateCart(){
-document.getElementById("cart-count").textContent=cart.length;
 const c=document.getElementById("cart-items");
 c.innerHTML="";
-cart.forEach(i=>c.innerHTML+=`${i.name} - KES ${i.price}<br>`);
-}
-document.getElementById("payNowBtn").onclick=()=>{
-let msg="Order:%0A";
 let total=0;
-cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`;total+=i.price});
-window.open(`https://wa.me/254780328599?text=${msg}Total: KES ${total}`);
+cart.forEach(i=>{c.innerHTML+=`${i.name} - KES ${i.price}<br>`; total+=i.price});
+document.getElementById("cart-count").textContent=cart.length;
+document.getElementById("cart-total").textContent=`Total: KES ${total}`;
+}
+
+/* Checkout via Paybill */
+document.getElementById("checkoutPaybill").onclick=()=>{
+if(cart.length===0) return alert("Your cart is empty!");
+document.getElementById("paybill-info").classList.remove("hidden-section");
+};
+
+/* WhatsApp confirmation */
+document.getElementById("confirmPaymentBtn").onclick=()=>{
+if(cart.length===0) return alert("Your cart is empty!");
+let msg="Payment Confirmation for Order:%0A";
+let total=0;
+cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price;});
+msg+=`Total Paid: KES ${total}`;
+window.open(`https://wa.me/254780328599?text=${msg}`);
 };
 
 /* BOOK SERVICE BUTTON */
@@ -239,7 +263,7 @@ document.getElementById("closeAdmin").onclick=()=>modal.classList.add("hidden");
 document.getElementById("addProductBtn").onclick=()=>{
 const name=document.getElementById("admin-name").value;
 const price=+document.getElementById("admin-price").value;
-if(name && price){products.push({name,price}); render();}
+if(name && price){products.push({name,price,img:"https://via.placeholder.com/300x150?text=New+Product"}); render();}
 document.getElementById("admin-name").value="";
 document.getElementById("admin-price").value="";
 };
