@@ -10,7 +10,6 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:Poppins,Arial,sans-serif}
 body{background:#f5f5f5;color:#333}
-.hidden{display:none!important}
 
 /* HEADER */
 .site-header{
@@ -19,35 +18,23 @@ background:#222;color:#fff;padding:15px 20px;position:sticky;top:0;z-index:1000
 }
 .logo-container{display:flex;align-items:center}
 .logo{height:45px;margin-right:10px}
-
 nav{display:flex;align-items:center}
-nav a,nav button{
-color:#fff;background:none;border:none;margin-left:15px;
-cursor:pointer;font-size:15px
-}
+nav a, nav button{color:#fff;background:none;border:none;margin-left:15px;cursor:pointer;font-size:15px}
 nav a.active{color:#00aaff;border-bottom:2px solid #00aaff}
 
 /* MOBILE */
 .menu-toggle{display:none;font-size:22px;background:none;border:none;color:#fff}
 @media(max-width:768px){
-nav{display:none;flex-direction:column;background:#222;
-position:absolute;top:100%;left:0;right:0}
+nav{display:none;flex-direction:column;background:#222;position:absolute;top:100%;left:0;right:0}
 nav.open{display:flex}
 .menu-toggle{display:block}
-nav a,nav button{padding:15px;border-top:1px solid #333}
+nav a, nav button{padding:15px;border-top:1px solid #333}
 }
 
 /* HERO */
-.hero{
-height:400px;position:relative;
-display:flex;align-items:center;justify-content:center;
-color:#fff;text-align:center
-}
+.hero{height:400px;position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
 .slideshow,.slide{position:absolute;inset:0}
-.slide{
-background-size:cover;background-position:center;
-opacity:0;transition:opacity 1s
-}
+.slide{background-size:cover;background-position:center;opacity:0;transition:opacity 1s}
 .slide.active{opacity:1}
 .hero-content{position:relative;z-index:2}
 
@@ -56,37 +43,20 @@ opacity:0;transition:opacity 1s
 .page.show{display:block}
 
 /* PRODUCTS */
-.product-grid{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:20px
-}
-.product{
-background:#fff;padding:15px;border-radius:8px;
-box-shadow:0 4px 8px rgba(0,0,0,.1);text-align:center
-}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.product{background:#fff;padding:15px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
 
 /* BUTTONS */
-.cta-btn{
-padding:10px 20px;background:#0077cc;color:#fff;
-border:none;border-radius:5px;cursor:pointer
-}
+.cta-btn{padding:10px 20px;background:#0077cc;color:#fff;border:none;border-radius:5px;cursor:pointer}
 .cta-btn:hover{background:#005fa3}
 
 /* CART */
-#cart-count{
-background:red;padding:2px 6px;border-radius:50%;
-font-size:12px
-}
+#cart-count{background:red;padding:2px 6px;border-radius:50%;font-size:12px}
 
 /* MODAL */
-.modal{
-position:fixed;inset:0;background:rgba(0,0,0,.5);
-display:flex;align-items:center;justify-content:center
-}
-.modal-content{
-background:#fff;padding:20px;border-radius:8px;
-width:90%;max-width:600px
-}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;visibility:hidden}
+.modal.show{visibility:visible}
+.modal-content{background:#fff;padding:20px;border-radius:8px;width:90%;max-width:600px}
 .close{float:right;font-size:22px;cursor:pointer}
 
 footer{text-align:center;padding:20px;background:#222;color:#fff}
@@ -97,12 +67,10 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 
 <header class="site-header">
 <div class="logo-container">
-<img src="logo.png" class="logo">
+<img src="assets/images/logo.png" class="logo">
 <h2>Hybrid Spares Shop</h2>
 </div>
-
 <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
-
 <nav id="nav">
 <a href="#home" class="nav-link active">Home</a>
 <a href="#products" class="nav-link">Products</a>
@@ -117,9 +85,9 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
 <!-- HERO -->
 <section class="hero" id="hero">
 <div class="slideshow">
-<div class="slide active" style="background-image:url('hero1.png')"></div>
-<div class="slide" style="background-image:url('hero2.png')"></div>
-<div class="slide" style="background-image:url('hero3.png')"></div>
+<div class="slide active" style="background-image:url('assets/images/hero1.png')"></div>
+<div class="slide" style="background-image:url('assets/images/hero2.png')"></div>
+<div class="slide" style="background-image:url('assets/images/hero3.png')"></div>
 </div>
 <div class="hero-content">
 <h1>Hybrid Vehicle Spares</h1>
@@ -151,11 +119,11 @@ src="https://www.google.com/maps?q=Dagoretti+Corner+Nairobi&output=embed"></ifra
 
 <section id="contact" class="page">
 <h2>Contact</h2>
-<p><a href="tel:+254780328599">+254 780 328 599</a></p>
+<p><a href="tel:+254700000000">+254 700 000 000</a></p>
 </section>
 
 <!-- ADMIN -->
-<div class="modal hidden" id="adminModal">
+<div class="modal" id="adminModal">
 <div class="modal-content">
 <span class="close" id="closeAdmin">&times;</span>
 <h3>Add Product</h3>
@@ -176,40 +144,32 @@ let products=[
 let cart=[];
 
 /* MOBILE MENU */
-menuToggle.onclick=()=>nav.classList.toggle("open");
+const nav = document.getElementById("nav");
+const menuToggle = document.getElementById("menuToggle");
+menuToggle.onclick = () => nav.classList.toggle("open");
 
-/* SPA NAV */
-const hero=document.getElementById("hero");
-const pages=document.querySelectorAll(".page");
-const links=document.querySelectorAll(".nav-link");
+/* SPA NAVIGATION */
+const hero = document.getElementById("hero");
+const pages = document.querySelectorAll(".page");
+const links = document.querySelectorAll(".nav-link");
 
 function showPage(id){
 pages.forEach(p=>p.classList.remove("show"));
 links.forEach(l=>l.classList.remove("active"));
 nav.classList.remove("open");
 
-if(id==="#home"){
-hero.style.display="flex";
-}else{
-hero.style.display="none";
-document.querySelector(id)?.classList.add("show");
-}
+if(id==="#home"){ hero.style.display="flex"; }
+else{ hero.style.display="none"; document.querySelector(id)?.classList.add("show"); }
 
 document.querySelector(`a[href="${id}"]`)?.classList.add("active");
 history.pushState(null,"",id);
 }
 
-links.forEach(l=>{
-l.onclick=e=>{
-e.preventDefault();
-showPage(l.getAttribute("href"));
-};
-});
-
+links.forEach(l=>l.onclick=e=>{ e.preventDefault(); showPage(l.getAttribute("href")); });
 showPage(location.hash || "#home");
 
-/* SLIDES */
-const slides=document.querySelectorAll(".slide");
+/* HERO SLIDES */
+const slides = document.querySelectorAll(".slide");
 let s=0;
 setInterval(()=>{
 if(hero.style.display!=="none"){
@@ -220,41 +180,55 @@ slides[s].classList.add("active");
 },5000);
 
 /* PRODUCTS */
-const list=document.getElementById("productList");
+const productList = document.getElementById("productList");
+const cartCount = document.getElementById("cart-count");
+
 function renderProducts(){
-list.innerHTML="";
+productList.innerHTML="";
 products.forEach(p=>{
-const d=document.createElement("div");
-d.className="product";
-d.innerHTML=`<h3>${p.name}</h3><p>KES ${p.price}</p>
-<button class="cta-btn">Add</button>`;
-d.querySelector("button").onclick=()=>{
+const div=document.createElement("div");
+div.className="product";
+div.innerHTML=`<h3>${p.name}</h3><p>KES ${p.price}</p><button class="cta-btn">Add</button>`;
+div.querySelector("button").onclick=()=>{
 cart.push(p);
 cartCount.textContent=cart.length;
+updateCart();
 };
-list.appendChild(d);
+productList.appendChild(div);
 });
 }
 renderProducts();
 
-/* WHATSAPP PAY */
-payBtn.onclick=()=>{
+/* CART */
+const cartItemsDiv = document.getElementById("cartItems");
+function updateCart(){
+cartItemsDiv.innerHTML="";
+cart.forEach(i=>cartItemsDiv.innerHTML+=`${i.name} - ${i.price}<br>`);
+}
+
+/* PAY VIA WHATSAPP */
+document.getElementById("payBtn").onclick=()=>{
 let msg="Order:%0A";
 let total=0;
-cart.forEach(i=>{msg+=`${i.name} - ${i.price}%0A`;total+=i.price});
+cart.forEach(i=>{ msg+=`${i.name} - ${i.price}%0A`; total+=i.price });
 window.open(`https://wa.me/254700000000?text=${msg}Total:${total}`);
 };
 
-/* ADMIN */
-adminBtn.onclick=()=>adminModal.classList.remove("hidden");
-closeAdmin.onclick=()=>adminModal.classList.add("hidden");
-addProduct.onclick=()=>{
-products.push({
-name:adminName.value,
-price:+adminPrice.value
-});
-adminName.value=adminPrice.value="";
+/* ADMIN MODAL */
+const adminModal = document.getElementById("adminModal");
+const adminBtn = document.getElementById("adminBtn");
+const closeAdmin = document.getElementById("closeAdmin");
+const addProductBtn = document.getElementById("addProduct");
+const adminName = document.getElementById("adminName");
+const adminPrice = document.getElementById("adminPrice");
+
+adminBtn.onclick = ()=> adminModal.classList.add("show");
+closeAdmin.onclick = ()=> adminModal.classList.remove("show");
+addProductBtn.onclick = ()=>{
+products.push({name:adminName.value, price:+adminPrice.value});
 renderProducts();
+adminName.value = "";
+adminPrice.value = "";
 };
 </script>
 
