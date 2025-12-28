@@ -48,6 +48,7 @@ section{padding:40px 20px;max-width:1200px;margin:auto}
 .product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .product{background:#fff;padding:15px;border-radius:8px;text-align:center;box-shadow:0 4px 8px rgba(0,0,0,.1)}
 .product img{width:100%;height:150px;object-fit:cover;border-radius:5px;margin-bottom:10px}
+.product-icon{font-size:50px;color:#0077cc;margin-bottom:10px}
 
 /* BUTTON */
 .cta-btn{padding:10px 20px;background:#0077cc;color:#fff;border:none;border-radius:5px;cursor:pointer;margin-top:5px}
@@ -105,21 +106,77 @@ footer{text-align:center;padding:20px;background:#222;color:#fff}
   </div>
 </section>
 
-<!-- PAGES -->
+<!-- ================= PRODUCTS ================= -->
 <section id="products" class="page hidden-section">
-<h2>Products</h2>
-<div class="product-grid" id="product-list"></div>
+    <h2>Our Products</h2>
+    <div id="product-list" class="product-grid">
+        <div class="product">
+            <i class="fa-solid fa-battery-full product-icon"></i>
+            <h3>Hybrid Batteries & Modules</h3>
+            <p>High-quality battery packs compatible with hybrid vehicles.</p>
+            <p>Price: 500</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Hybrid Batteries" data-price="500">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-gears product-icon"></i>
+            <h3>Electric Motors & Generators</h3>
+            <p>Reliable motors and motor-generators.</p>
+            <p>Price: 750</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Electric Motors" data-price="750">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-bolt product-icon"></i>
+            <h3>Inverters & Power Control Units</h3>
+            <p>Efficient energy management components.</p>
+            <p>Price: 400</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Inverters" data-price="400">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-engine product-icon"></i>
+            <h3>Engine Components</h3>
+            <p>Spark plugs, filters, pistons, and exhaust parts.</p>
+            <p>Price: 350</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Engine Components" data-price="350">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-fan product-icon"></i>
+            <h3>Cooling Systems</h3>
+            <p>Cooling fans, pumps & thermal components.</p>
+            <p>Price: 200</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Cooling Systems" data-price="200">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-car-side product-icon"></i>
+            <h3>Suspension Parts</h3>
+            <p>Shocks, struts, and springs.</p>
+            <p>Price: 250</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Suspension Parts" data-price="250">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-gears product-icon"></i>
+            <h3>Gearbox & Transmission</h3>
+            <p>Automatic & CVT gearboxes.</p>
+            <p>Price: 600</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Gearbox" data-price="600">Buy Now</button>
+        </div>
+        <div class="product">
+            <i class="fa-solid fa-triangle-exclamation product-icon"></i>
+            <h3>Auxiliary & Safety Parts</h3>
+            <p>High-voltage cables and safety components.</p>
+            <p>Price: 150</p>
+            <button class="cta-btn add-to-cart-btn" data-name="Auxiliary Parts" data-price="150">Buy Now</button>
+        </div>
+    </div>
 </section>
 
+<!-- CART -->
 <section id="cart" class="page hidden-section">
 <h2>Your Cart</h2>
 <div id="cart-items"></div>
-<h3 id="cart-total">Total: KES 0</h3>
-
+<h3 id="cart-total">Total: 0</h3>
 <div class="cart-actions">
-<button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
+    <button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
 </div>
-
 <div id="paybill-info" class="hidden-section">
 <h4>Pay via M-Pesa Paybill</h4>
 <ul>
@@ -165,25 +222,7 @@ src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+La
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
 
 <script>
-/* ORIGINAL PRODUCT IMAGES */
-let products = [
-{name:"Hybrid Battery 12V 100Ah",price:12000,img:"image/product1.png"},
-{name:"Hybrid Battery 24V 50Ah",price:15000,img:"image/product2.png"},
-{name:"Inverter 3kW",price:18000,img:"image/product3.png"},
-{name:"DC-DC Converter",price:8000,img:"image/product4.png"},
-{name:"Battery Management Module",price:12000,img:"image/product5.png"},
-{name:"Hybrid ECU Module",price:25000,img:"image/product6.png"},
-{name:"Regenerative Braking Module",price:22000,img:"image/product7.png"},
-{name:"Cooling Fan Assembly",price:3500,img:"image/product8.png"},
-{name:"Hybrid Fuse Box",price:4500,img:"image/product9.png"},
-{name:"High Voltage Cables Set",price:6000,img:"image/product10.png"},
-{name:"Battery Terminal Kit",price:1200,img:"image/product11.png"},
-{name:"Hybrid Sensor Pack",price:8000,img:"image/product12.png"}
-];
-
-let cart = [];
-
-/* NAV SPA */
+// SPA Navigation
 const hero = document.querySelector(".hero");
 const pages = document.querySelectorAll(".page");
 const navLinks = document.querySelectorAll(".nav-link");
@@ -192,10 +231,7 @@ function showPage(id){
 pages.forEach(p=>{p.classList.add("hidden-section");p.classList.remove("show")});
 hero.classList.add("hidden-section");
 if(id==="#home"){hero.classList.remove("hidden-section")}
-else{
-const p=document.querySelector(id);
-if(p){p.classList.remove("hidden-section");setTimeout(()=>p.classList.add("show"),10)}
-}
+else{document.querySelector(id)?.classList.remove("hidden-section");setTimeout(()=>document.querySelector(id)?.classList.add("show"),10)}
 navLinks.forEach(l=>l.classList.remove("active"));
 document.querySelector(`a[href="${id}"]`)?.classList.add("active");
 history.pushState(null,"",id);
@@ -204,7 +240,7 @@ history.pushState(null,"",id);
 navLinks.forEach(l=>l.onclick=e=>{e.preventDefault();showPage(l.getAttribute("href"))});
 showPage(location.hash||"#home");
 
-/* SLIDES */
+// Hero Slideshow
 const slides=document.querySelectorAll(".slide");
 let s=0;
 setInterval(()=>{if(!hero.classList.contains("hidden-section")){
@@ -213,37 +249,32 @@ s=(s+1)%slides.length;
 slides[s].classList.add("active");
 }},5000);
 
-/* PRODUCTS */
-const list=document.getElementById("product-list");
-function render(){
-list.innerHTML="";
-products.forEach(p=>{
-const d=document.createElement("div");
-d.className="product";
-d.innerHTML=`<img src="${p.img}" alt="${p.name}"><h3>${p.name}</h3><p>KES ${p.price}</p><button class="cta-btn">Add</button>`;
-d.querySelector("button").onclick=()=>{cart.push(p);updateCart()};
-list.appendChild(d);
-});
-}
-render();
+// Cart
+let cart = [];
 
-/* CART */
+document.querySelectorAll(".add-to-cart-btn").forEach(btn=>{
+btn.addEventListener("click", ()=>{
+cart.push({name: btn.dataset.name, price: Number(btn.dataset.price)});
+updateCart();
+});
+});
+
 function updateCart(){
-const c=document.getElementById("cart-items");
-c.innerHTML="";
+const cartItems=document.getElementById("cart-items");
 let total=0;
-cart.forEach(i=>{c.innerHTML+=`${i.name} - KES ${i.price}<br>`; total+=i.price});
+cartItems.innerHTML="";
+cart.forEach(item=>{cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price;});
 document.getElementById("cart-count").textContent=cart.length;
 document.getElementById("cart-total").textContent=`Total: KES ${total}`;
 }
 
-/* Checkout via Paybill */
+// Checkout Paybill
 document.getElementById("checkoutPaybill").onclick=()=>{
 if(cart.length===0) return alert("Your cart is empty!");
 document.getElementById("paybill-info").classList.remove("hidden-section");
-};
+}
 
-/* WhatsApp confirmation */
+// WhatsApp confirmation
 document.getElementById("confirmPaymentBtn").onclick=()=>{
 if(cart.length===0) return alert("Your cart is empty!");
 let msg="Payment Confirmation for Order:%0A";
@@ -253,17 +284,17 @@ msg+=`Total Paid: KES ${total}`;
 window.open(`https://wa.me/254780328599?text=${msg}`);
 };
 
-/* BOOK SERVICE BUTTON */
+// Book Service button
 document.getElementById("bookServiceBtn").onclick=()=>showPage("#contact");
 
-/* ADMIN */
+// Admin
 const modal=document.getElementById("adminModal");
 document.getElementById("adminLoginBtn").onclick=()=>modal.classList.remove("hidden");
 document.getElementById("closeAdmin").onclick=()=>modal.classList.add("hidden");
 document.getElementById("addProductBtn").onclick=()=>{
 const name=document.getElementById("admin-name").value;
 const price=+document.getElementById("admin-price").value;
-if(name && price){products.push({name,price,img:"image/placeholder.png"}); render();}
+if(name && price){cart.push({name,price}); updateCart();}
 document.getElementById("admin-name").value="";
 document.getElementById("admin-price").value="";
 };
