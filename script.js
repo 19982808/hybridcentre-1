@@ -1,117 +1,83 @@
-document.addEventListener('DOMContentLoaded', () => {
-
-  /* ================= SPA NAVIGATION ================= */
+document.addEventListener('DOMContentLoaded', async () => {
+  // ---------- SPA NAVIGATION ----------
   const hero = document.querySelector('.hero');
   const pages = document.querySelectorAll('.page');
   const navLinks = document.querySelectorAll('.nav-link');
 
   function showPage(id) {
     pages.forEach(p => p.classList.add('hidden-section'));
-
-    if (id === '#home' || !id) {
-      hero?.classList.remove('hidden-section');
-    } else {
-      hero?.classList.add('hidden-section');
-    }
+    if (id !== '#home') hero.classList.add('hidden-section');
+    else hero.classList.remove('hidden-section');
 
     const target = document.querySelector(id);
     if (target) target.classList.remove('hidden-section');
 
     navLinks.forEach(l => l.classList.remove('active'));
-    const activeLink = document.querySelector(`a[href="${id}"]`);
-    if (activeLink) activeLink.classList.add('active');
+    const link = document.querySelector(`a[href="${id}"]`);
+    if (link) link.classList.add('active');
 
     history.pushState(null, '', id);
   }
 
-  navLinks.forEach(link => {
-    link.addEventListener('click', e => {
+  navLinks.forEach(l => {
+    l.addEventListener('click', e => {
       e.preventDefault();
-      showPage(link.getAttribute('href'));
-      document.querySelector('nav')?.classList.remove('open');
+      showPage(l.getAttribute('href'));
+      document.querySelector('nav').classList.remove('open');
     });
   });
 
-  document.getElementById('menuToggle')?.addEventListener('click', () => {
-    document.querySelector('nav')?.classList.toggle('open');
-  });
+  document.getElementById('menuToggle').onclick = () => {
+    document.querySelector('nav').classList.toggle('open');
+  };
 
-  document.getElementById('bookServiceBtn')?.addEventListener('click', () => {
-    showPage('#products');
-  });
+  document.getElementById('bookServiceBtn').onclick = () => showPage('#products');
 
-  /* ================= HERO SLIDESHOW ================= */
+  // ---------- HERO SLIDESHOW ----------
   const slides = document.querySelectorAll('.slide');
-  let slideIndex = 0;
-
+  let s = 0;
   setInterval(() => {
-    if (!hero?.classList.contains('hidden-section') && slides.length > 0) {
-      slides.forEach(s => s.classList.remove('active'));
-      slideIndex = (slideIndex + 1) % slides.length;
-      slides[slideIndex].classList.add('active');
+    if (!hero.classList.contains('hidden-section')) {
+      slides.forEach(sl => sl.classList.remove('active'));
+      s = (s + 1) % slides.length;
+      slides[s].classList.add('active');
     }
   }, 5000);
 
-  /* ================= PRODUCTS ================= */
-  const productList = document.getElementById('product-list');
+  // ---------- PRODUCTS ----------
   let products = [];
-
   async function fetchProducts() {
     try {
-      const res = await fetch('./products.json');
+      const res = await fetch('products.json');
       products = await res.json();
       renderProducts();
+      renderAdmin(); // ensure admin list updates
     } catch (err) {
-      console.error('Failed to load products.json', err);
-      if (productList) {
-        productList.innerHTML = `<p style="color:red">Failed to load products.</p>`;
-      }
+      console.error('Failed to fetch products.json', err);
     }
   }
+  fetchProducts();
 
+  const productList = document.getElementById('product-list');
   function renderProducts() {
     if (!productList) return;
-
     productList.innerHTML = '';
-
     products.forEach(p => {
       productList.innerHTML += `
         <div class="product" style="opacity:${p.stock ? 1 : 0.4}">
-          <img 
-            src="${p.image}" 
-            alt="${p.name}" 
-            onerror="this.src='images/products/placeholder.png'"
-            style="width:100%; height:150px; object-fit:contain; margin-bottom:6px;"
-          >
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:150px; object-fit:contain; margin-bottom:5px;">
           <h3>${p.name}</h3>
           <p>KES ${p.price}</p>
-          <small>${p.stock ? 'In Stock' : 'Out of Stock'}</small><br>
-
-          <button 
-            class="cta-btn" 
-            ${!p.stock ? 'disabled' : ''}
-            onclick="addToCart('${p.name}', ${p.price})"
-          >
-            Add to Cart
-          </button>
-
-          <button 
-            class="ask-expert-btn"
-            onclick="askExpert('${p.name}')"
-          >
-            Ask Expert
-          </button>
-        </div>
-      `;
+          <small>${p.stock ? "In Stock" : "Out of Stock"}</small><br>
+          <button class="cta-btn" ${!p.stock ? "disabled" : ""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+          <button class="ask-expert-btn" onclick="askExpert('${p.tags}')">Ask Expert</button>
+        </div>`;
     });
   }
 
-  fetchProducts();
-
-  /* ================= CART ================= */
+  // ---------- CART ----------
   let cart = [];
-
-  window.addToCart = function (name, price) {
+  window.addToCart = function(name, price) {
     cart.push({ name, price });
     updateCart();
     showPage('#cart');
@@ -119,63 +85,75 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function updateCart() {
     const cartItems = document.getElementById('cart-items');
-    const cartCount = document.getElementById('cart-count');
-    const cartTotal = document.getElementById('cart-total');
-
     if (!cartItems) return;
-
     let total = 0;
     cartItems.innerHTML = '';
-
-    cart.forEach(item => {
-      cartItems.innerHTML += `${item.name} - KES ${item.price}<br>`;
-      total += item.price;
-    });
-
-    if (cartCount) cartCount.textContent = cart.length;
-    if (cartTotal) cartTotal.textContent = `Total: KES ${total}`;
+    cart.forEach(i => { cartItems.innerHTML += `${i.name} - KES ${i.price}<br>`; total += i.price; });
+    document.getElementById('cart-count').textContent = cart.length;
+    document.getElementById('cart-total').textContent = `Total: KES ${total}`;
   }
 
-  document.getElementById('checkoutPaybill')?.addEventListener('click', () => {
-    if (cart.length === 0) return alert('Cart is empty');
-    document.getElementById('paybill-info')?.classList.remove('hidden-section');
-  });
-
-  document.getElementById('confirmPaymentBtn')?.addEventListener('click', () => {
-    if (cart.length === 0) return alert('Cart is empty');
-
-    let msg = "Payment Confirmation:%0A";
-    let total = 0;
-
-    cart.forEach(i => {
-      msg += `${i.name} - KES ${i.price}%0A`;
-      total += i.price;
-    });
-
-    msg += `Total Paid: KES ${total}`;
-    window.open(`https://wa.me/254780328599?text=${msg}`);
-  });
-
-  document.getElementById('waOrder')?.addEventListener('click', () => {
-    if (cart.length === 0) return alert('Cart is empty');
-
-    let msg = "HYBRID CENTRE ORDER%0A-----------------%0A";
-    let total = 0;
-
-    cart.forEach(i => {
-      msg += `${i.name} - KES ${i.price}%0A`;
-      total += i.price;
-    });
-
-    msg += `-----------------%0ATOTAL: KES ${total}%0AVehicle: _______%0ALocation: _______`;
-
-    window.open(`https://wa.me/254780328599?text=${msg}`);
-  });
-
-  /* ================= ASK EXPERT ================= */
-  window.askExpert = function (productName) {
-    const msg = `Hello Hybrid Centre, I need expert advice on: ${productName}`;
-    window.open(`https://wa.me/254780328599?text=${encodeURIComponent(msg)}`);
+  document.getElementById('checkoutPaybill').onclick = () => {
+    if (cart.length === 0) return alert('Cart empty');
+    document.getElementById('paybill-info').classList.remove('hidden-section');
   };
 
+  document.getElementById('confirmPaymentBtn').onclick = () => {
+    if (cart.length === 0) return alert('Cart empty');
+    let msg = "Payment Confirmation:%0A";
+    let total = 0;
+    cart.forEach(i => { msg += `${i.name} - KES ${i.price}%0A`; total += i.price; });
+    msg += `Total Paid: KES ${total}`;
+    window.open(`https://wa.me/254780328599?text=${msg}`);
+  };
+
+  document.getElementById('waOrder').onclick = () => {
+    if (cart.length === 0) return alert('Cart empty');
+    let msg = "HYBRID CENTRE ORDER%0A-----------------%0A";
+    let total = 0;
+    cart.forEach(i => { msg += `${i.name} - KES ${i.price}%0A`; total += i.price; });
+    msg += `-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;
+    window.open(`https://wa.me/254780328599?text=${msg}`);
+  };
+
+  // ---------- ADMIN MODAL ----------
+  const adminModal = document.getElementById('adminModal');
+  const adminBtn = document.getElementById('adminLoginBtn');
+  const closeAdmin = document.getElementById('closeAdmin');
+  adminBtn.onclick = () => adminModal.classList.remove('hidden-section');
+  closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
+
+  const pname = document.getElementById('pname');
+  const pprice = document.getElementById('pprice');
+  const ptags = document.getElementById('ptags');
+  const pimage = document.getElementById('pimage');
+  const addProductBtn = document.getElementById('addProductBtn');
+  const adminList = document.getElementById('admin-list');
+
+  window.renderAdmin = function() {
+    if (!adminList) return;
+    adminList.innerHTML = '';
+    products.forEach(p => {
+      adminList.innerHTML += `<li>${p.name} - KES ${p.price} - ${p.stock ? "In Stock" : "Out of Stock"}</li>`;
+    });
+  };
+
+  addProductBtn.onclick = () => {
+    if (!pname.value || !pprice.value || !pimage.value) return alert('Please fill in name, price, and image');
+    const newProduct = {
+      id: products.length + 1,
+      name: pname.value,
+      price: parseFloat(pprice.value),
+      tags: ptags.value || "",
+      stock: true,
+      image: pimage.value
+    };
+    products.push(newProduct);
+    renderProducts();
+    renderAdmin();
+    pname.value = pprice.value = ptags.value = pimage.value = '';
+  };
+
+  // ---------- LOAD PAGE FROM HASH ----------
+  if (window.location.hash) showPage(window.location.hash);
 });
