@@ -15,24 +15,32 @@ document.getElementById("menuToggle").onclick=()=>document.querySelector("nav").
 document.getElementById("bookServiceBtn").onclick=()=>showPage("#products");
 
 // ---------- PRODUCTS ----------
-let products = JSON.parse(localStorage.getItem("products"))||[
-  {id:1,name:"Hybrid Battery Modules",price:500,description:"High quality battery module",image:"images/products/battery_module-8.png",stock:true},
-  {id:2,name:"Inverter & Power Control Unit",price:400,description:"Efficient inverter",image:"images/products/inverter.png",stock:true},
-  {id:3,name:"Cooling Fans & Pumps",price:200,description:"Cooling solution",image:"images/products/cooling.png",stock:true}
+let products = JSON.parse(localStorage.getItem("products")) || [
+  { id: 1, name: "Hybrid Battery Modules", price: 500, description: "High quality battery module", image: "images/products/battery_module-8.png", stock: true },
+  { id: 2, name: "Inverter & Power Control Unit", price: 400, description: "Efficient inverter", image: "images/products/inverter.png", stock: true },
+  { id: 3, name: "Cooling Fans & Pumps", price: 200, description: "Cooling solution", image: "images/products/cooling.png", stock: true }
 ];
-function saveProducts(){localStorage.setItem("products",JSON.stringify(products));}
-function renderProducts(){
-  const list=document.getElementById("product-list");
-  list.innerHTML="";
-  products.forEach(p=>{
-    list.innerHTML+=`<div class="product" style="opacity:${p.stock?1:.4}">
+function saveProducts() { localStorage.setItem("products", JSON.stringify(products)); }
+
+// ---------- RENDER PRODUCTS ----------
+function renderProducts() {
+  const list = document.getElementById("product-list");
+  list.innerHTML = "";
+  products.forEach(p => {
+    const productDiv = document.createElement("div");
+    productDiv.className = "product";
+    productDiv.style.opacity = p.stock ? 1 : 0.4;
+    productDiv.innerHTML = `
       <img src="${p.image}" alt="${p.name}" style="width:100px; height:100px; object-fit:contain;">
       <h3>${p.name}</h3>
       <p>KES ${p.price}</p>
-      <small>${p.stock?"In Stock":"Out of Stock"}</small>
-      <button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
-      <button class="ask-expert-btn" onclick="alert('Ask expert about ${p.name}')">Ask Expert</button>
-    </div>`;
+      <small>${p.stock ? "In Stock" : "Out of Stock"}</small>
+      <button class="cta-btn" ${!p.stock ? "disabled" : ""} data-id="${p.id}">Add to Cart</button>
+      <button class="ask-expert-btn">Ask Expert</button>
+    `;
+    // Add to cart click
+    productDiv.querySelector(".cta-btn").addEventListener("click", () => addToCart(p.name, p.price));
+    list.appendChild(productDiv);
   });
 }
 renderProducts();
@@ -41,31 +49,89 @@ renderProducts();
 const modal = document.getElementById("adminModal");
 const adminBtn = document.getElementById("adminLoginBtn");
 const closeAdmin = document.getElementById("closeAdmin");
-if(adminBtn && modal) adminBtn.onclick=()=>modal.classList.remove("hidden");
-if(closeAdmin && modal) closeAdmin.onclick=()=>modal.classList.add("hidden");
+const addProductBtn = document.getElementById("addProductBtn");
+const adminList = document.getElementById("admin-list");
 
-function renderAdmin(){
-  const list = document.getElementById("admin-list"); list.innerHTML="";
-  products.forEach(p=>{
-    list.innerHTML+=`<li>${p.name} - ${p.stock?"IN":"OUT"} 
-    <button onclick="toggleStock(${p.id})">Toggle</button></li>`;
+if (adminBtn && modal) adminBtn.onclick = () => {
+  modal.classList.remove("hidden");
+  renderAdmin();
+};
+if (closeAdmin && modal) closeAdmin.onclick = () => modal.classList.add("hidden");
+
+function renderAdmin() {
+  adminList.innerHTML = "";
+  products.forEach(p => {
+    const li = document.createElement("li");
+    li.innerHTML = `${p.name} - ${p.stock ? "IN" : "OUT"} 
+      <button class="toggle-stock" data-id="${p.id}">Toggle</button>
+      <button class="delete-product" data-id="${p.id}">Delete</button>`;
+    adminList.appendChild(li);
+  });
+
+  // Attach toggle event listeners dynamically
+  document.querySelectorAll(".toggle-stock").forEach(btn => {
+    btn.onclick = () => {
+      const id = parseInt(btn.dataset.id);
+      toggleStock(id);
+    };
+  });
+
+  // Attach delete event listeners dynamically
+  document.querySelectorAll(".delete-product").forEach(btn => {
+    btn.onclick = () => {
+      const id = parseInt(btn.dataset.id);
+      deleteProduct(id);
+    };
   });
 }
-function addProduct(){
-  const name=document.getElementById("pname").value;
-  const price=+document.getElementById("pprice").value;
-  const tags=document.getElementById("ptags").value;
-  const image=document.getElementById("pimage").value;
-  if(!name||!price) return alert("Name & Price required");
-  products.push({id:Date.now(),name,price,tags,stock:true,image});
-  saveProducts(); renderProducts(); renderAdmin();
-  document.getElementById("pname").value="";
-  document.getElementById("pprice").value="";
-  document.getElementById("ptags").value="";
-  document.getElementById("pimage").value="";
+
+function addProduct() {
+  const name = document.getElementById("pname").value.trim();
+  const price = parseFloat(document.getElementById("pprice").value);
+  const tags = document.getElementById("ptags").value.trim();
+  const image = document.getElementById("pimage").value.trim();
+
+  if (!name || !price || !image) return alert("Name, Price, and Image are required!");
+
+  const newProduct = {
+    id: Date.now(),
+    name,
+    price,
+    tags,
+    stock: true,
+    image
+  };
+  products.push(newProduct);
+  saveProducts();
+  renderProducts();
+  renderAdmin();
+
+  // Reset form
+  document.getElementById("pname").value = "";
+  document.getElementById("pprice").value = "";
+  document.getElementById("ptags").value = "";
+  document.getElementById("pimage").value = "";
 }
-function toggleStock(id){ const p=products.find(x=>x.id===id); p.stock=!p.stock; saveProducts(); renderProducts(); renderAdmin(); }
+addProductBtn.onclick = addProduct;
+
+function toggleStock(id) {
+  const p = products.find(x => x.id === id);
+  if (p) p.stock = !p.stock;
+  saveProducts();
+  renderProducts();
+  renderAdmin();
+}
+
+function deleteProduct(id) {
+  products = products.filter(x => x.id !== id);
+  saveProducts();
+  renderProducts();
+  renderAdmin();
+}
+
+// Initial render
 renderAdmin();
+
 
 // ---------- CART ----------
 let cart=[];
