@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "name": "Hybrid Battery Module",
+    "price": 50000,
+    "stock": true,
+    "tags": "battery module",
+    "image": "images/battery_module.png"
+  },
+  {
+    "id": 2,
+    "name": "Inverter & Power Control Unit",
+    "price": 40000,
+    "stock": true,
+    "tags": "inverter",
+    "image": "images/inverter.png"
+  },
+  {
+    "id": 3,
+    "name": "Cooling Fan & Pump",
+    "price": 20000,
+    "stock": true,
+    "tags": "cooling fan",
+    "image": "images/cooling_fan.png"
+  },
+  {
+    "id": 4,
+    "name": "Hybrid Starter Motor",
+    "price": 15000,
+    "stock": true,
+    "tags": "starter motor",
+    "image": "images/starter_motor.png"
+  },
+  {
+    "id": 5,
+    "name": "Gearbox & Transmission",
+    "price": 60000,
+    "stock": true,
+    "tags": "gearbox",
+    "image": "images/gearbox.png"
+  },
+  {
+    "id": 6,
+    "name": "Auxiliary & Safety Parts",
+    "price": 15000,
+    "stock": true,
+    "tags": "safety parts",
+    "image": "images/safety_parts.png"
+  }
+]
