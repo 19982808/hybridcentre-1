@@ -1,50 +1,66 @@
 [
   {
     "id": 1,
-    "name": "Hybrid Battery Module",
-    "price": 50000,
-    "stock": true,
+    "name": "Hybrid Battery Modules",
+    "price": 500,
     "tags": "battery module",
-    "image": "images/battery_module.png"
+    "stock": true,
+    "image": "images/battery.png"
   },
   {
     "id": 2,
-    "name": "Inverter & Power Control Unit",
-    "price": 40000,
+    "name": "Electric Motors & Generators",
+    "price": 750,
+    "tags": "motor generator",
     "stock": true,
-    "tags": "inverter",
-    "image": "images/inverter.png"
+    "image": "images/motor.png"
   },
   {
     "id": 3,
-    "name": "Cooling Fan & Pump",
-    "price": 20000,
+    "name": "Inverters & Power Control Units",
+    "price": 400,
+    "tags": "inverter",
     "stock": true,
-    "tags": "cooling fan",
-    "image": "images/cooling_fan.png"
+    "image": "images/inverter.png"
   },
   {
     "id": 4,
-    "name": "Hybrid Starter Motor",
-    "price": 15000,
+    "name": "Engine Components",
+    "price": 350,
+    "tags": "engine",
     "stock": true,
-    "tags": "starter motor",
-    "image": "images/starter_motor.png"
+    "image": "images/engine.png"
   },
   {
     "id": 5,
-    "name": "Gearbox & Transmission",
-    "price": 60000,
+    "name": "Cooling Systems",
+    "price": 200,
+    "tags": "cooling",
     "stock": true,
-    "tags": "gearbox",
-    "image": "images/gearbox.png"
+    "image": "images/cooling.png"
   },
   {
     "id": 6,
-    "name": "Auxiliary & Safety Parts",
-    "price": 15000,
+    "name": "Suspension Parts",
+    "price": 250,
+    "tags": "suspension",
     "stock": true,
-    "tags": "safety parts",
-    "image": "images/safety_parts.png"
+    "image": "images/suspension.png"
+  },
+  {
+    "id": 7,
+    "name": "Gearbox & Transmission",
+    "price": 600,
+    "tags": "gearbox",
+    "stock": true,
+    "image": "images/gearbox.png"
+  },
+  {
+    "id": 8,
+    "name": "Auxiliary & Safety Parts",
+    "price": 150,
+    "tags": "safety",
+    "stock": true,
+    "image": "images/safety.png"
   }
 ]
