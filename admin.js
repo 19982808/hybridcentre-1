@@ -1,66 +1,63 @@
-// admin.js
-document.addEventListener('DOMContentLoaded', () => {
+// admin.js — INVENTORY MANAGER ONLY
+document.addEventListener("DOMContentLoaded", () => {
   const adminBtn = document.getElementById("adminLoginBtn");
-  const modal = document.getElementById("adminModal");
+  const adminModal = document.getElementById("adminModal");
   const closeAdmin = document.getElementById("closeAdmin");
   const adminList = document.getElementById("admin-list");
-  const addBtn = document.getElementById("addProductBtn");
 
   let products = [];
 
-  // Open/close modal
-  if(adminBtn && modal) adminBtn.onclick = () => modal.classList.remove("hidden");
-  if(closeAdmin && modal) closeAdmin.onclick = () => modal.classList.add("hidden");
+  // ===== Open / Close Admin =====
+  adminBtn?.addEventListener("click", () => {
+    adminModal.classList.remove("hidden");
+  });
 
-  // Fetch products JSON
-  fetch('products.json')
-    .then(res => res.json())
+  closeAdmin?.addEventListener("click", () => {
+    adminModal.classList.add("hidden");
+  });
+
+  // ===== Load products.json =====
+  fetch("./products.json")
+    .then(res => {
+      if (!res.ok) throw new Error("products.json not found");
+      return res.json();
+    })
     .then(data => {
       products = data;
       renderAdmin();
     })
-    .catch(err => console.error("Could not load products.json:", err));
+    .catch(err => {
+      adminList.innerHTML = "<li>Failed to load inventory</li>";
+      console.error(err);
+    });
 
-  // Render admin inventory list
+  // ===== Render Inventory =====
   function renderAdmin() {
     adminList.innerHTML = "";
+
     products.forEach(p => {
       const li = document.createElement("li");
+
       li.innerHTML = `
-        ${p.name} - ${p.stock ? "IN" : "OUT"}
-        <button onclick="toggleStock(${p.id})">Toggle</button>
+        <strong>${p.name}</strong><br>
+        <small>${p.tags}</small><br>
+        <span>Status: ${p.stock ? "IN STOCK" : "OUT OF STOCK"}</span><br>
+        <button data-id="${p.id}">Toggle Stock</button>
+        <hr>
       `;
+
       adminList.appendChild(li);
     });
-  }
 
-  // Toggle stock globally for inline onclick
-  window.toggleStock = function(id) {
-    const p = products.find(x => x.id === id);
-    if(p) p.stock = !p.stock;
-    renderAdmin();
-  }
-
-  // Add new product
-  addBtn.onclick = () => {
-    const name = document.getElementById("pname").value.trim();
-    const price = +document.getElementById("pprice").value;
-    const tags = document.getElementById("ptags").value.trim();
-    if(!name || !price) return alert("Name & Price required");
-    products.push({
-      id: Date.now(),
-      name,
-      price,
-      tags,
-      stock: true,
-      image: ""
+    adminList.querySelectorAll("button").forEach(btn => {
+      btn.onclick = () => toggleStock(btn.dataset.id);
     });
+  }
+
+  function toggleStock(id) {
+    const product = products.find(p => p.id == id);
+    if (!product) return;
+    product.stock = !product.stock;
     renderAdmin();
-    document.getElementById("pname").value = "";
-    document.getElementById("pprice").value = "";
-    document.getElementById("ptags").value = "";
   }
 });
-
-
-
