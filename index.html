@@ -42,9 +42,14 @@ section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; col
 /* FOOTER */
 footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
 
+/* ADMIN MODAL */
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; z-index:2000; }
+.modal-content { background:#fff; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; }
+.close { float:right; font-size:24px; cursor:pointer; }
+
 /* KIMANI CHATBOT */
 #kimani-chat{ position:fixed; bottom:20px; right:20px; width:250px; background:#111; border:2px solid #4B88C4; border-radius:10px; padding:10px; color:#fff; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
-#kimani-chat .avatar{ width:60px; height:60px; border-radius:50%; margin-bottom:5px; }
+#kimani-chat .avatar{ font-size:50px; color:#4B88C4; margin-bottom:5px; }
 #chat-history{ background:#222; color:#4B88C4; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
 .message{ margin-bottom:5px; }
 .user-msg{ text-align:right; color:#FFD700; }
@@ -57,7 +62,7 @@ footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
 </head>
 <body>
 
-<!-- HEADER / NAV -->
+<!-- HEADER -->
 <header class="site-header">
   <div class="logo-container">
     <img src="images/logo.png" class="logo" alt="Hybrid Centre Logo">
@@ -135,22 +140,23 @@ footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
 <p>WhatsApp: <a href="https://wa.me/254780328599" target="_blank">Chat</a></p>
 </section>
 
-<!-- ADMIN -->
+<!-- ADMIN DASHBOARD -->
 <div class="modal hidden" id="adminModal">
 <div class="modal-content">
 <span class="close" id="closeAdmin">&times;</span>
 <h3>Inventory Manager</h3>
 <input id="pname" placeholder="Product name">
 <input id="pprice" type="number" placeholder="Price">
-<input id="ptags" placeholder="Tags">
-<button onclick="addProduct()">Add Product</button>
+<input id="ptags" placeholder="Tags (optional)">
+<button id="addProductBtn">Add Product</button>
+<h4>Current Inventory:</h4>
 <ul id="admin-list"></ul>
 </div>
 </div>
 
 <!-- KIMANI CHATBOT -->
 <div id="kimani-chat">
-  <img src="images/kimani.gif" class="avatar" alt="Kimani the Mechanic">
+  <i class="fa-solid fa-user-gear avatar"></i>
   <div id="chat-history">Hi! I’m Kimani, your hybrid mechanic. Ask me anything!</div>
   <input type="text" id="chat-input" placeholder="Type your question...">
   <button id="chat-send">Send</button>
@@ -159,45 +165,114 @@ footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
 
 <script>
-// SPA navigation
-const hero=document.querySelector(".hero"), pages=document.querySelectorAll(".page"), navLinks=document.querySelectorAll(".nav-link");
-function showPage(id){ pages.forEach(p=>p.classList.add("hidden-section")); if(id!="#home"){hero.classList.add("hidden-section"); document.querySelector(id)?.classList.remove("hidden-section");}else hero.classList.remove("hidden-section"); navLinks.forEach(l=>l.classList.remove("active")); document.querySelector(`a[href="${id}"]`)?.classList.add("active"); history.pushState(null,"",id);}
-navLinks.forEach(l=>l.addEventListener("click",e=>{e.preventDefault();showPage(l.getAttribute("href"));document.querySelector("nav").classList.remove("open");}));
+// SPA Navigation
+const hero = document.querySelector(".hero");
+const pages = document.querySelectorAll(".page");
+const navLinks = document.querySelectorAll(".nav-link");
+function showPage(id){
+  pages.forEach(p=>p.classList.add("hidden-section"));
+  if(id!="#home"){ hero.classList.add("hidden-section"); document.querySelector(id)?.classList.remove("hidden-section"); }
+  else hero.classList.remove("hidden-section");
+  navLinks.forEach(l=>l.classList.remove("active"));
+  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
+  history.pushState(null,"",id);
+}
+navLinks.forEach(l=>l.addEventListener("click", e=>{ e.preventDefault(); showPage(l.getAttribute("href")); document.querySelector("nav").classList.remove("open"); }));
 document.getElementById("menuToggle").onclick=()=>document.querySelector("nav").classList.toggle("open");
 document.getElementById("bookServiceBtn").onclick=()=>showPage("#products");
 
-// Hero slideshow
-const slides=document.querySelectorAll(".slide");let s=0;setInterval(()=>{if(!hero.classList.contains("hidden-section")){slides.forEach(sl=>sl.classList.remove("active"));s=(s+1)%slides.length;slides[s].classList.add("active");}},5000);
+// Hero Slideshow
+const slides=document.querySelectorAll(".slide");let s=0;
+setInterval(()=>{if(!hero.classList.contains("hidden-section")){slides.forEach(sl=>sl.classList.remove("active")); s=(s+1)%slides.length; slides[s].classList.add("active");}},5000);
 
-// Products
-let products=JSON.parse(localStorage.getItem("products"))||[{id:1,name:"Hybrid Battery Modules",price:500,tags:"battery hv module",stock:true},{id:2,name:"Inverter & Power Control Unit",price:400,tags:"inverter power warning",stock:true},{id:3,name:"Cooling Fans & Pumps",price:200,tags:"cooling overheat fan",stock:true}];
+// PRODUCTS DATA
+let products = JSON.parse(localStorage.getItem("products"))||[
+  {id:1,name:"Hybrid Battery Modules",price:500,tags:"battery module",stock:true},
+  {id:2,name:"Inverter & Power Control Unit",price:400,tags:"inverter",stock:true},
+  {id:3,name:"Cooling Fans & Pumps",price:200,tags:"cooling fan",stock:true}
+];
 function saveProducts(){localStorage.setItem("products",JSON.stringify(products));}
-function renderProducts(){const list=document.getElementById("product-list");list.innerHTML="";products.forEach(p=>{list.innerHTML+=`<div class="product" style="opacity:${p.stock?1:.4}"><h3>${p.name}</h3><p>KES ${p.price}</p><small>${p.stock?"In Stock":"Out of Stock"}</small><button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button><button class="ask-expert-btn" onclick="expert('${p.tags}')">Ask Expert</button></div>`;});}
+function renderProducts(){
+  const list=document.getElementById("product-list");
+  list.innerHTML="";
+  products.forEach(p=>{
+    list.innerHTML+=`<div class="product" style="opacity:${p.stock?1:.4}">
+      <h3>${p.name}</h3>
+      <p>KES ${p.price}</p>
+      <small>${p.stock?"In Stock":"Out of Stock"}</small>
+      <button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+      <button class="ask-expert-btn" onclick="expert('${p.tags}')">Ask Expert</button>
+    </div>`;
+  });
+}
 renderProducts();
-function addProduct(){const pname=document.getElementById("pname").value,pprice=document.getElementById("pprice").value,ptags=document.getElementById("ptags").value;if(!pname||!pprice)return alert("Name and Price required");products.push({id:Date.now(),name:pname,price:+pprice,tags:ptags,stock:true});saveProducts();renderProducts();renderAdmin();document.getElementById("pname").value="";document.getElementById("pprice").value="";document.getElementById("ptags").value="";}
-function toggleStock(id){const p=products.find(x=>x.id===id);p.stock=!p.stock;saveProducts();renderProducts();renderAdmin();}
-function renderAdmin(){const adminList=document.getElementById("admin-list");adminList.innerHTML="";products.forEach(p=>{adminList.innerHTML+=`<li>${p.name} - ${p.stock?"IN":"OUT"} <button onclick="toggleStock(${p.id})">Toggle</button></li>`;});}
-renderAdmin();
 
-// Cart
-let cart=[];function addToCart(name,price){cart.push({name,price});updateCart();showPage("#cart");}
-function updateCart(){const cartItems=document.getElementById("cart-items");let total=0;cartItems.innerHTML="";cart.forEach(item=>{cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`;total+=item.price;});document.getElementById("cart-count").textContent=cart.length;document.getElementById("cart-total").textContent=`Total: KES ${total}`;}
-document.getElementById("checkoutPaybill").onclick=()=>{if(cart.length===0)return alert("Your cart is empty!");document.getElementById("paybill-info").classList.remove("hidden-section");};
-document.getElementById("confirmPaymentBtn").onclick=()=>{if(cart.length===0)return alert("Your cart is empty!");let msg="Payment Confirmation for Order:%0A";let total=0;cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`;total+=i.price;});msg+=`Total Paid: KES ${total}`;window.open(`https://wa.me/254780328599?text=${msg}`);};
-document.getElementById("waOrder").onclick=()=>{if(cart.length===0)return alert("Cart empty");let msg="HYBRID CENTRE ORDER%0A-----------------%0A";let total=0;cart.forEach(i=>{msg+=`${i.name} - KES ${i.price}%0A`;total+=i.price;});msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;window.open(`https://wa.me/254780328599?text=${msg}`);};
-document.getElementById("stkBtn").onclick=()=>{alert("STK Push coming soon! Use Paybill for now.");};
-
-// Admin modal
-const modal=document.getElementById("adminModal"), adminBtn=document.getElementById("adminLoginBtn"), closeAdmin=document.getElementById("closeAdmin");
-if(!location.hostname.includes("localhost")) adminBtn.style.display="none";
+// ADMIN DASHBOARD
+const modal = document.getElementById("adminModal");
+const adminBtn = document.getElementById("adminLoginBtn");
+const closeAdmin = document.getElementById("closeAdmin");
 if(adminBtn && modal) adminBtn.onclick=()=>modal.classList.remove("hidden");
 if(closeAdmin && modal) closeAdmin.onclick=()=>modal.classList.add("hidden");
 
-// Kimani Chatbot
-const chatHistory=document.getElementById("chat-history"), chatInput=document.getElementById("chat-input"), chatSend=document.getElementById("chat-send");
-function addMessage(text,sender){const div=document.createElement("div");div.classList.add("message",sender==="user"?"user-msg":"ai-msg");div.textContent=text;chatHistory.appendChild(div);chatHistory.scrollTop=chatHistory.scrollHeight;}
-function kimaniReply(input){input=input.toLowerCase();if(input.includes("hello")||input.includes("hi"))return"Hey there! Kimani here, ready to help with your hybrid vehicle."; if(input.includes("battery"))return"Check your hybrid battery connections and charge! Need steps?"; if(input.includes("cooling"))return"Check cooling fans and coolant levels. I can guide you."; if(input.includes("price"))return"All part prices are on the Products page. I can give advice!"; if(input.includes("thanks"))return"You're welcome! Kimani always has your back."; return"Interesting! Tell me more, so I can help better.";}
-chatSend.onclick=()=>{const userText=chatInput.value.trim();if(!userText)return;addMessage(userText,"user");chatInput.value="";setTimeout(()=>{addMessage(kimaniReply(userText),"ai");},500);}
+function renderAdmin(){
+  const list = document.getElementById("admin-list"); list.innerHTML="";
+  products.forEach(p=>{
+    list.innerHTML+=`<li>${p.name} - ${p.stock?"IN":"OUT"} 
+    <button onclick="toggleStock(${p.id})">Toggle</button></li>`;
+  });
+}
+function addProduct(){
+  const name=document.getElementById("pname").value;
+  const price=+document.getElementById("pprice").value;
+  const tags=document.getElementById("ptags").value;
+  if(!name||!price)return alert("Name & Price required");
+  products.push({id:Date.now(),name,price,tags,stock:true});
+  saveProducts(); renderProducts(); renderAdmin();
+  document.getElementById("pname").value=""; document.getElementById("pprice").value=""; document.getElementById("ptags").value="";
+}
+function toggleStock(id){ const p=products.find(x=>x.id===id); p.stock=!p.stock; saveProducts(); renderProducts(); renderAdmin(); }
+renderAdmin();
+document.getElementById("addProductBtn").onclick=addProduct;
+
+// CART
+let cart=[];
+function addToCart(name,price){ cart.push({name,price}); updateCart(); showPage("#cart"); }
+function updateCart(){ const cartItems=document.getElementById("cart-items"); let total=0; cartItems.innerHTML=""; cart.forEach(item=>{ cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price; }); document.getElementById("cart-count").textContent=cart.length; document.getElementById("cart-total").textContent=`Total: KES ${total}`; }
+document.getElementById("checkoutPaybill").onclick=()=>{if(cart.length===0)return alert("Cart empty"); document.getElementById("paybill-info").classList.remove("hidden-section"); };
+document.getElementById("confirmPaymentBtn").onclick=()=>{
+  if(cart.length===0)return alert("Cart empty");
+  let msg="Payment Confirmation for Order:%0A"; let total=0;
+  cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
+  msg+=`Total Paid: KES ${total}`;
+  window.open(`https://wa.me/254780328599?text=${msg}`);
+};
+document.getElementById("waOrder").onclick=()=>{
+  if(cart.length===0)return alert("Cart empty"); let msg="HYBRID CENTRE ORDER%0A-----------------%0A"; let total=0;
+  cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
+  msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;
+  window.open(`https://wa.me/254780328599?text=${msg}`);
+};
+document.getElementById("stkBtn").onclick=()=>alert("STK Push coming soon!");
+
+// KIMANI CHATBOT
+const chatHistory = document.getElementById("chat-history");
+const chatInput = document.getElementById("chat-input");
+const chatSend = document.getElementById("chat-send");
+function addMessage(text,sender){ const div=document.createElement("div"); div.classList.add("message", sender==="user"?"user-msg":"ai-msg"); div.textContent=text; chatHistory.appendChild(div); chatHistory.scrollTop=chatHistory.scrollHeight; }
+function kimaniReply(input){
+  input=input.toLowerCase();
+  if(input.includes("hello")||input.includes("hi")) return "Hey there! Kimani here, ready to help with your hybrid vehicle.";
+  if(input.includes("battery")) return "Check your hybrid battery connections and charge! Need steps?";
+  if(input.includes("cooling")) return "Check cooling fans and coolant levels. I can guide you.";
+  if(input.includes("price")) return "All part prices are on the Products page. I can give advice!";
+  if(input.includes("thanks")) return "You're welcome! Kimani always has your back.";
+  return "Interesting! Tell me more, so I can help better.";
+}
+chatSend.onclick=()=>{ const userText=chatInput.value.trim(); if(!userText)return; addMessage(userText,"user"); chatInput.value=""; setTimeout(()=>addMessage(kimaniReply(userText),"ai"),500); }
+
+// Initialize
+showPage(location.hash||"#home");
+renderProducts();
 </script>
 
 </body>
