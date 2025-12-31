@@ -12,8 +12,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let products = JSON.parse(localStorage.getItem('products')) || [];
 
-  // ---------- SHOW / HIDE ADMIN MODAL ----------
-  adminBtn.onclick = () => adminModal.classList.remove('hidden-section');
+  // ---------- ADMIN LOGIN ----------
+  adminBtn.onclick = () => {
+    const password = prompt("Enter admin password:");
+    if(password === '12345') {
+      adminModal.classList.remove('hidden-section');
+      renderAdmin();
+    } else {
+      alert("Incorrect password. Access denied!");
+    }
+  };
+
   closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
 
   // ---------- RENDER ADMIN LIST ----------
@@ -73,12 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- SAVE / LOAD FROM LOCALSTORAGE ----------
   function saveProducts() {
     localStorage.setItem('products', JSON.stringify(products));
-    logAdminActivity('Updated inventory');
-  }
-
-  // ---------- ADMIN ACTIVITY LOG ----------
-  function logAdminActivity(msg) {
-    console.log(`Admin Log: ${msg} at ${new Date().toLocaleString()}`);
+    console.log(`Admin Log: Inventory updated at ${new Date().toLocaleString()}`);
   }
 
   // INITIAL RENDER
