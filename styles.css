@@ -1,0 +1,53 @@
+/* ---------- GLOBAL ---------- */
+* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins, Arial, sans-serif; }
+body { background:#1C1C1C; color:#ECF0F1; font-weight:bold; }
+
+/* ---------- HEADER / NAVBAR ---------- */
+.site-header { display:flex; justify-content:space-between; align-items:center; background:#2C3E50; color:#ECF0F1; padding:15px 20px; position:sticky; top:0; z-index:1000; }
+nav a, nav button { color:#ECF0F1; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
+nav a.active { color:#D35400; border-bottom:2px solid #ECF0F1; }
+.logo-container { display:flex; align-items:center; }
+.logo { height:80px; display:block; margin-right:10px; }
+.menu-toggle { display:none; font-size:22px; color:#ECF0F1; background:none; border:none; }
+@media(max-width:768px){ nav { display:none; flex-direction:column; background:#111; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
+
+/* ---------- HERO ---------- */
+.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECF0F1; text-align:center; overflow:hidden; z-index:1; background:#111; }
+.slideshow, .slide { position:absolute; inset:0; }
+.slide { background-size:cover; height:400px; background-position:center; opacity:0; transition:opacity 0.2s; }
+.slide.active { opacity:1; }
+.hero-content { position:relative; z-index:2; }
+.cta-btn { padding:10px 20px; background:#D35400; color:#ECF0F1; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
+.cta-btn:hover { background:#E67E22; }
+
+/* ---------- SECTIONS ---------- */
+section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; color:#ECF0F1; font-weight:bold; }
+.product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.product { background:#2C3E50; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.3); color:#ECF0F1; font-weight:bold; }
+.product h3, .product p, .product small { color:#ECF0F1; }
+
+/* ---------- CART ---------- */
+#cart-count { background:#D35400; padding:2px 6px; border-radius:50%; font-size:12px; }
+
+/* ---------- ADMIN MODAL ---------- */
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:2000; }
+.modal-content { background:#2C3E50; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECF0F1; }
+.close { float:right; font-size:24px; cursor:pointer; color:#E67E22; }
+
+/* ---------- KIMANI CHATBOT ---------- */
+#kimani-chat { position:fixed; bottom:20px; right:20px; width:250px; background:#2C3E50; border:2px solid #D35400; border-radius:10px; padding:10px; color:#ECF0F1; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
+#kimani-chat .avatar { font-size:50px; color:#D35400; margin-bottom:5px; }
+#chat-history { background:#111; color:#ECF0F1; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
+.message { margin-bottom:5px; }
+.user-msg { text-align:right; color:#E67E22; }
+.ai-msg { text-align:left; color:#D35400; }
+#chat-input { width:100%; padding:6px; border-radius:5px; border:none; margin-bottom:5px; }
+#chat-send { width:100%; padding:6px; border:none; background:#D35400; color:#ECF0F1; border-radius:5px; cursor:pointer; }
+#chat-send:hover { background:#E67E22; }
+
+/* ---------- TYPING ANIMATION ---------- */
+.typing-dots { display:inline-block; width:20px; text-align:center; }
+.typing-dots span { display:inline-block; width:4px; height:4px; margin:0 1px; background:#D35400; border-radius:50%; animation:blink 1.4s infinite both; }
+.typing-dots span:nth-child(2) { animation-delay:.2s; }
+.typing-dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes blink { 0%,80%,100% { opacity:0; } 40% { opacity:1; } }
