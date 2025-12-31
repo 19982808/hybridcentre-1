@@ -6,57 +6,65 @@
 <title>Hybrid Spares Shop</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: Poppins, Arial, sans-serif; }
-body { background: #f5f5f5; color: #000; font-weight: bold; }
+/* ---------- GLOBAL ---------- */
+* { box-sizing:border-box; margin:0; padding:0; font-family:Poppins, Arial, sans-serif; }
+body { background:#1C1C1C; color:#ECF0F1; font-weight:bold; }
 
-/* HEADER */
-.site-header { display:flex; justify-content:space-between; align-items:center; background:#4888C4; color:#fff; padding:15px 20px; position:sticky; top:0; z-index:1000; }
-nav a, nav button { color:#fff; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
-nav a.active { color:#FFD700; border-bottom:2px solid #fff; }
+/* ---------- HEADER / NAVBAR ---------- */
+.site-header { display:flex; justify-content:space-between; align-items:center; background:#2C3E50; color:#ECF0F1; padding:15px 20px; position:sticky; top:0; z-index:1000; }
+nav a, nav button { color:#ECF0F1; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
+nav a.active { color:#D35400; border-bottom:2px solid #ECF0F1; }
 .logo-container { display:flex; align-items:center; }
-.logo { height:120px; display:block; margin-right:10px; }
-.menu-toggle { display:none; font-size:22px; color:#fff; background:none; border:none; }
-@media(max-width:768px){ nav { display:none; flex-direction:column; background:#222; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
+.logo { height:80px; display:block; margin-right:10px; }
+.menu-toggle { display:none; font-size:22px; color:#ECF0F1; background:none; border:none; }
+@media(max-width:768px){ nav { display:none; flex-direction:column; background:#111; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
 
-/* HERO */
-.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#fff; text-align:center; overflow:hidden; z-index:1; }
+/* ---------- HERO ---------- */
+.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECF0F1; text-align:center; overflow:hidden; z-index:1; background:#111; }
 .hero.hidden-section { display:none !important; }
 .slideshow, .slide { position:absolute; inset:0; }
 .slide { background-size:cover; height:400px; background-position:center; opacity:0; transition:opacity 0.2s; }
 .slide.active { opacity:1; }
 .hero-content { position:relative; z-index:2; }
+.cta-btn { padding:10px 20px; background:#D35400; color:#ECF0F1; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
+.cta-btn:hover { background:#E67E22; }
 
-/* SECTIONS */
-section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; color:#fff; font-weight:bold; }
+/* ---------- SECTIONS ---------- */
+section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; color:#ECF0F1; font-weight:bold; }
 .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-.product { background:#fff; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.1); color:#000; font-weight:bold; }
-.product h3, .product p, .product small { color:#000; }
-.cta-btn{ padding:10px 20px; background:#0077cc; color:#fff; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
-.cta-btn:hover{ background:#005fa3; }
-.ask-expert-btn{ margin-top:6px; width:100%; background:#111; color:#4B88C4; border:1px solid #333; padding:8px; font-size:12px; cursor:pointer; }
-.ask-expert-btn:hover{ background:#1b1b1b; border-color:#4B88C4; }
+.product { background:#2C3E50; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.3); color:#ECF0F1; font-weight:bold; }
+.product h3, .product p, .product small { color:#ECF0F1; }
+.ask-expert-btn { margin-top:6px; width:100%; background:#111; color:#D35400; border:1px solid #D35400; padding:8px; font-size:12px; cursor:pointer; border-radius:5px; }
+.ask-expert-btn:hover { background:#2C3E50; border-color:#E67E22; color:#E67E22; }
 
-/* CART */
-#cart-count { background:red; padding:2px 6px; border-radius:50%; font-size:12px; }
+/* ---------- CART ---------- */
+#cart-count { background:#D35400; padding:2px 6px; border-radius:50%; font-size:12px; }
 
-/* FOOTER */
-footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
+/* ---------- FOOTER ---------- */
+footer { text-align:center; padding:20px; background:#111; color:#2C3E50; }
 
-/* ADMIN MODAL */
-.modal { position:fixed; inset:0; background:rgba(0,0,0,.6); display:flex; align-items:center; justify-content:center; z-index:2000; }
-.modal-content { background:#fff; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; }
-.close { float:right; font-size:24px; cursor:pointer; }
+/* ---------- ADMIN MODAL ---------- */
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:2000; }
+.modal-content { background:#2C3E50; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECF0F1; }
+.close { float:right; font-size:24px; cursor:pointer; color:#E67E22; }
 
-/* KIMANI CHATBOT */
-#kimani-chat{ position:fixed; bottom:20px; right:20px; width:250px; background:#111; border:2px solid #4B88C4; border-radius:10px; padding:10px; color:#fff; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
-#kimani-chat .avatar{ font-size:50px; color:#4B88C4; margin-bottom:5px; }
-#chat-history{ background:#222; color:#4B88C4; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
-.message{ margin-bottom:5px; }
-.user-msg{ text-align:right; color:#FFD700; }
-.ai-msg{ text-align:left; color:#4B88C4; }
-#chat-input{ width:100%; padding:6px; border-radius:5px; border:none; margin-bottom:5px; }
-#chat-send{ width:100%; padding:6px; border:none; background:#4B88C4; color:#fff; border-radius:5px; cursor:pointer; }
-#chat-send:hover{ background:#0077cc; }
+/* ---------- KIMANI CHATBOT ---------- */
+#kimani-chat { position:fixed; bottom:20px; right:20px; width:250px; background:#2C3E50; border:2px solid #D35400; border-radius:10px; padding:10px; color:#ECF0F1; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
+#kimani-chat .avatar { font-size:50px; color:#D35400; margin-bottom:5px; }
+#chat-history { background:#111; color:#ECF0F1; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
+.message { margin-bottom:5px; }
+.user-msg { text-align:right; color:#E67E22; }
+.ai-msg { text-align:left; color:#D35400; }
+#chat-input { width:100%; padding:6px; border-radius:5px; border:none; margin-bottom:5px; }
+#chat-send { width:100%; padding:6px; border:none; background:#D35400; color:#ECF0F1; border-radius:5px; cursor:pointer; }
+#chat-send:hover { background:#E67E22; }
+
+/* ---------- TYPING ANIMATION ---------- */
+.typing-dots { display:inline-block; width:20px; text-align:center; }
+.typing-dots span { display:inline-block; width:4px; height:4px; margin:0 1px; background:#D35400; border-radius:50%; animation:blink 1.4s infinite both; }
+.typing-dots span:nth-child(2) { animation-delay:.2s; }
+.typing-dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes blink { 0%,80%,100% { opacity:0; } 40% { opacity:1; } }
 
 </style>
 </head>
@@ -165,7 +173,7 @@ footer { text-align:center; padding:20px; background:#222; color:#4888C4; }
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
 
 <script>
-// SPA Navigation
+// ---------- SPA NAVIGATION ----------
 const hero = document.querySelector(".hero");
 const pages = document.querySelectorAll(".page");
 const navLinks = document.querySelectorAll(".nav-link");
@@ -181,11 +189,11 @@ navLinks.forEach(l=>l.addEventListener("click", e=>{ e.preventDefault(); showPag
 document.getElementById("menuToggle").onclick=()=>document.querySelector("nav").classList.toggle("open");
 document.getElementById("bookServiceBtn").onclick=()=>showPage("#products");
 
-// Hero Slideshow
+// ---------- HERO SLIDESHOW ----------
 const slides=document.querySelectorAll(".slide");let s=0;
 setInterval(()=>{if(!hero.classList.contains("hidden-section")){slides.forEach(sl=>sl.classList.remove("active")); s=(s+1)%slides.length; slides[s].classList.add("active");}},5000);
 
-// PRODUCTS DATA
+// ---------- PRODUCTS ----------
 let products = JSON.parse(localStorage.getItem("products"))||[
   {id:1,name:"Hybrid Battery Modules",price:500,tags:"battery module",stock:true},
   {id:2,name:"Inverter & Power Control Unit",price:400,tags:"inverter",stock:true},
@@ -207,7 +215,7 @@ function renderProducts(){
 }
 renderProducts();
 
-// ADMIN DASHBOARD
+// ---------- ADMIN DASHBOARD ----------
 const modal = document.getElementById("adminModal");
 const adminBtn = document.getElementById("adminLoginBtn");
 const closeAdmin = document.getElementById("closeAdmin");
@@ -234,7 +242,7 @@ function toggleStock(id){ const p=products.find(x=>x.id===id); p.stock=!p.stock;
 renderAdmin();
 document.getElementById("addProductBtn").onclick=addProduct;
 
-// CART
+// ---------- CART ----------
 let cart=[];
 function addToCart(name,price){ cart.push({name,price}); updateCart(); showPage("#cart"); }
 function updateCart(){ const cartItems=document.getElementById("cart-items"); let total=0; cartItems.innerHTML=""; cart.forEach(item=>{ cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price; }); document.getElementById("cart-count").textContent=cart.length; document.getElementById("cart-total").textContent=`Total: KES ${total}`; }
@@ -254,26 +262,22 @@ document.getElementById("waOrder").onclick=()=>{
 };
 document.getElementById("stkBtn").onclick=()=>alert("STK Push coming soon!");
 
-// KIMANI CHATBOT
+// ---------- KIMANI CHATBOT ----------
 const chatHistory = document.getElementById("chat-history");
 const chatInput = document.getElementById("chat-input");
 const chatSend = document.getElementById("chat-send");
-function addMessage(text,sender){ const div=document.createElement("div"); div.classList.add("message", sender==="user"?"user-msg":"ai-msg"); div.textContent=text; chatHistory.appendChild(div); chatHistory.scrollTop=chatHistory.scrollHeight; }
+
+function addMessage(text,sender){
+  const div=document.createElement("div");
+  div.classList.add("message", sender==="user"?"user-msg":"ai-msg");
+  div.innerHTML = text;
+  chatHistory.appendChild(div);
+  chatHistory.scrollTop=chatHistory.scrollHeight;
+}
+
 function kimaniReply(input){
   input=input.toLowerCase();
   if(input.includes("hello")||input.includes("hi")) return "Hey there! Kimani here, ready to help with your hybrid vehicle.";
   if(input.includes("battery")) return "Check your hybrid battery connections and charge! Need steps?";
   if(input.includes("cooling")) return "Check cooling fans and coolant levels. I can guide you.";
-  if(input.includes("price")) return "All part prices are on the Products page. I can give advice!";
-  if(input.includes("thanks")) return "You're welcome! Kimani always has your back.";
-  return "Interesting! Tell me more, so I can help better.";
-}
-chatSend.onclick=()=>{ const userText=chatInput.value.trim(); if(!userText)return; addMessage(userText,"user"); chatInput.value=""; setTimeout(()=>addMessage(kimaniReply(userText),"ai"),500); }
-
-// Initialize
-showPage(location.hash||"#home");
-renderProducts();
-</script>
-
-</body>
-</html>
+  if(input.includes("price")) return "All part prices are on the Products page. I
