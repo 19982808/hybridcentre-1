@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!text) return;
     addMessage(text, 'user-message');
     input.value = '';
+    messages.scrollTop = messages.scrollHeight;
 
     // Typing animation
     addMessage('<span class="typing-dots"><span></span><span></span><span></span></span>', 'ai-msg', true);
@@ -28,7 +29,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ===== Add message =====
   function addMessage(text, className, html = false) {
-    // Remove typing dots if present
     const typing = messages.querySelector('.typing-dots');
     if (typing) typing.parentElement.remove();
 
@@ -41,38 +41,39 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ===== Process user input =====
-  async function processMessage(inputText) {
+  function processMessage(inputText) {
     if (inputText.includes('product') || inputText.includes('products')) {
-      try {
-        const res = await fetch('products.json');
-        const data = await res.json();
-        if (!data.length) return addMessage('No products available right now.', 'ai-msg');
+      fetch('products.json')
+        .then(res => res.json())
+        .then(data => {
+          if (!data.length) return addMessage('No products available right now.', 'ai-msg');
 
-        addMessage('Here are our products:', 'ai-msg');
+          addMessage('Here are our products:', 'ai-msg');
 
-        data.forEach(prod => {
-          const content = `
-            <div style="border:1px solid #D35400; padding:8px; margin:5px 0; border-radius:8px;">
-              <img src="${prod.image}" alt="${prod.name}" style="width:80px; height:80px; object-fit:contain; float:left; margin-right:10px;">
-              <strong>${prod.name}</strong><br>
-              <small>${prod.description || 'No description'}</small><br>
-              <button class="ask-product-btn" data-id="${prod.id}">Ask Expert</button>
-              <div style="clear:both;"></div>
-            </div>
-          `;
-          addMessage(content, 'ai-msg', true);
-        });
-
-        document.querySelectorAll('.ask-product-btn').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const id = btn.dataset.id;
-            showPage('products');
-            addMessage(`You asked about product #${id}. Check the Products section.`, 'ai-msg');
+          data.forEach(prod => {
+            const content = `
+              <div style="border:1px solid #D35400; padding:8px; margin:5px 0; border-radius:8px;">
+                <img src="${prod.image}" alt="${prod.name}" style="width:80px; height:80px; object-fit:contain; float:left; margin-right:10px;">
+                <strong>${prod.name}</strong><br>
+                <small>${prod.description}</small><br>
+                <button class="ask-product-btn" data-id="${prod.id}">Ask Expert</button>
+                <div style="clear:both;"></div>
+              </div>
+            `;
+            addMessage(content, 'ai-msg', true);
           });
+
+          document.querySelectorAll('.ask-product-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+              const prodId = btn.dataset.id;
+              const prodName = data.find(p => p.id == prodId)?.name || 'product';
+              addMessage(`You asked about "${prodName}". Our expert will respond shortly!`, 'ai-msg');
+            });
+          });
+        })
+        .catch(() => {
+          addMessage('Could not load products. Try again later.', 'ai-msg');
         });
-      } catch {
-        addMessage('Could not load products. Try again later.', 'ai-msg');
-      }
 
     } else if (inputText.includes('hello') || inputText.includes('hi')) {
       addMessage('Hey! I’m Kimani, your hybrid mechanic. Ask me anything about your vehicle.', 'ai-msg');
