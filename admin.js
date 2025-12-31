@@ -1,7 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
+  const adminLoginModal = document.getElementById('adminLoginModal');
   const adminModal = document.getElementById('adminModal');
   const adminBtn = document.getElementById('adminLoginBtn');
+  const adminAccessBtn = document.getElementById('adminAccessBtn');
+  const closeAdminLogin = adminLoginModal.querySelector('.close');
   const closeAdmin = document.getElementById('closeAdmin');
+  const adminError = document.getElementById('adminError');
 
   const pname = document.getElementById('pname');
   const pprice = document.getElementById('pprice');
@@ -12,17 +16,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
   let products = JSON.parse(localStorage.getItem('products')) || [];
 
-  // ---------- ADMIN LOGIN ----------
+  // ---------- SHOW LOGIN MODAL ----------
   adminBtn.onclick = () => {
-    const password = prompt("Enter admin password:");
-    if(password === '12345') {
+    adminLoginModal.classList.remove('hidden-section');
+    adminError.style.display = 'none';
+  };
+
+  closeAdminLogin?.addEventListener('click', () => {
+    adminLoginModal.classList.add('hidden-section');
+  });
+
+  // ---------- LOGIN VALIDATION ----------
+  adminAccessBtn.onclick = () => {
+    const passwordInput = document.getElementById('adminPassword').value;
+    if (passwordInput === '12345') { // <-- Set your password here
+      adminLoginModal.classList.add('hidden-section');
       adminModal.classList.remove('hidden-section');
       renderAdmin();
     } else {
-      alert("Incorrect password. Access denied!");
+      adminError.style.display = 'block';
     }
   };
 
+  // ---------- CLOSE ADMIN DASHBOARD ----------
   closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
 
   // ---------- RENDER ADMIN LIST ----------
