@@ -1,66 +1,92 @@
 [
   {
     "id": 1,
-    "name": "Hybrid Battery Modules",
+    "name": "Hybrid Battery Module",
+    "description": "High-performance lithium-ion hybrid battery module designed for extended lifespan and reliable energy output.",
     "price": 500,
-    "tags": "battery module",
+    "tags": "battery, hybrid, module",
     "stock": true,
-    "image": "images/battery.png"
+    "image": "images/products/battery_module-8.png"
   },
   {
     "id": 2,
-    "name": "Electric Motors & Generators",
-    "price": 750,
-    "tags": "motor generator",
+    "name": "Inverter & Power Control Unit",
+    "description": "Advanced inverter and power control unit for seamless energy conversion and efficiency in hybrid vehicles.",
+    "price": 400,
+    "tags": "inverter, hybrid, power control",
     "stock": true,
-    "image": "images/motor.png"
+    "image": "images/products/inverter_unit-8.png"
   },
   {
     "id": 3,
-    "name": "Inverters & Power Control Units",
-    "price": 400,
-    "tags": "inverter",
+    "name": "Cooling Fan Assembly",
+    "description": "Durable cooling fan assembly to prevent overheating and maintain optimal engine and battery temperature.",
+    "price": 200,
+    "tags": "cooling, fan, hybrid",
     "stock": true,
-    "image": "images/inverter.png"
+    "image": "images/products/cooling_fan-8.png"
   },
   {
     "id": 4,
-    "name": "Engine Components",
+    "name": "Hybrid Starter Motor",
+    "description": "Reliable starter motor designed specifically for hybrid vehicle systems for smooth ignition.",
     "price": 350,
-    "tags": "engine",
+    "tags": "starter motor, hybrid",
     "stock": true,
-    "image": "images/engine.png"
+    "image": "images/products/starter_motor-8.png"
   },
   {
     "id": 5,
-    "name": "Cooling Systems",
-    "price": 200,
-    "tags": "cooling",
+    "name": "Regenerative Braking Sensor",
+    "description": "High-precision sensor that optimizes regenerative braking and improves energy recovery efficiency.",
+    "price": 150,
+    "tags": "regenerative braking, sensor",
     "stock": true,
-    "image": "images/cooling.png"
+    "image": "images/products/reg_brake_sensor-8.png"
   },
   {
     "id": 6,
-    "name": "Suspension Parts",
-    "price": 250,
-    "tags": "suspension",
+    "name": "Hybrid ECU Controller",
+    "description": "Electronic control unit (ECU) for hybrid vehicles, ensuring smooth integration of engine and electric systems.",
+    "price": 600,
+    "tags": "ECU, controller, hybrid",
     "stock": true,
-    "image": "images/suspension.png"
+    "image": "images/products/hybrid_ecu-8.png"
   },
   {
     "id": 7,
-    "name": "Gearbox & Transmission",
-    "price": 600,
-    "tags": "gearbox",
+    "name": "HVAC Compressor",
+    "description": "Efficient HVAC compressor for hybrid vehicles, providing superior climate control without draining battery power.",
+    "price": 250,
+    "tags": "HVAC, compressor, hybrid",
     "stock": true,
-    "image": "images/gearbox.png"
+    "image": "images/products/hvac_compressor-8.png"
   },
   {
     "id": 8,
-    "name": "Auxiliary & Safety Parts",
-    "price": 150,
-    "tags": "safety",
+    "name": "Hybrid Transmission Controller",
+    "description": "Advanced transmission controller to manage gear shifts smoothly and efficiently in hybrid vehicles.",
+    "price": 450,
+    "tags": "transmission, controller, hybrid",
     "stock": true,
-    "image": "images/safety.png"
+    "image": "images/products/transmission_controller-8.png"
+  },
+  {
+    "id": 9,
+    "name": "High-Voltage Wiring Harness",
+    "description": "Durable and insulated wiring harness to safely transmit power between hybrid battery and systems.",
+    "price": 300,
+    "tags": "wiring, harness, hybrid",
+    "stock": true,
+    "image": "images/products/wiring_harness-8.png"
+  },
+  {
+    "id": 10,
+    "name": "Hybrid Cooling Pump",
+    "description": "Energy-efficient coolant pump to maintain optimal temperature for hybrid systems and batteries.",
+    "price": 180,
+    "tags": "cooling, pump, hybrid",
+    "stock": true,
+    "image": "images/products/cooling_pump-8.png"
   }
 ]
