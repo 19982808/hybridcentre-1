@@ -35,6 +35,9 @@ footer { text-align:center; padding:20px; background:#111; color:#2B2B2B; }
 .modal { position:fixed; inset:0; background:rgba(0,0,0,.9); display:flex; align-items:center; justify-content:center; z-index:2000; }
 .modal-content { background:#2B2B2B; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECF0F1; }
 .close { float:right; font-size:24px; cursor:pointer; color:#C97F00; }
+#admin-list li { display:flex; align-items:center; justify-content:space-between; padding:5px 0; border-bottom:1px solid #333; }
+.edit-btn, .delete-btn { background:#A85C00; color:#ECF0F1; border:none; padding:4px 8px; margin-left:5px; border-radius:4px; cursor:pointer; font-size:12px; }
+.edit-btn:hover, .delete-btn:hover { background:#C97F00; }
 
 /* ---------- CHATBOT ---------- */
 #chatbot-container { position:fixed; bottom:80px; right:20px; width:300px; background:#2B2B2B; border:2px solid #A85C00; border-radius:10px; padding:10px; color:#ECF0F1; font-size:13px; z-index:2000; display:flex; flex-direction:column; }
@@ -50,3 +53,6 @@ footer { text-align:center; padding:20px; background:#111; color:#2B2B2B; }
 .typing-dots span:nth-child(2) { animation-delay:.2s; }
 .typing-dots span:nth-child(3) { animation-delay:.4s; }
 @keyframes blink { 0%,80%,100% { opacity:0; } 40% { opacity:1; } }
+
+/* ---------- HIDDEN ---------- */
+.hidden-section { display:none; }
