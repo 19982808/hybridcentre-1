@@ -8,70 +8,63 @@
 <style>
 /* ---------- GLOBAL ---------- */
 * { box-sizing:border-box; margin:0; padding:0; font-family:Poppins, Arial, sans-serif; }
-body { background:#1B1B1B; color:#ECF0F1; font-weight:bold; }
+body { background:#1A1A1A; color:#ECECEC; font-weight:bold; }
 
 /* ---------- HEADER / NAVBAR ---------- */
-.site-header { display:flex; justify-content:space-between; align-items:center; background:#2C2F2F; color:#ECF0F1; padding:15px 20px; position:sticky; top:0; z-index:1000; }
-nav a, nav button { color:#ECF0F1; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
-nav a.active { color:#E67E22; border-bottom:2px solid #ECF0F1; }
+.site-header { display:flex; justify-content:space-between; align-items:center; background:#2B2D2F; color:#ECECEC; padding:15px 20px; position:sticky; top:0; z-index:1000; }
+nav a, nav button { color:#ECECEC; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
+nav a.active { color:#FF6B00; border-bottom:2px solid #ECECEC; }
 .logo-container { display:flex; align-items:center; }
-.logo { height:80px; display:block; margin-right:10px; }
-.menu-toggle { display:none; font-size:22px; color:#ECF0F1; background:none; border:none; }
-@media(max-width:768px){ 
-  nav { display:none; flex-direction:column; background:#111; position:absolute; top:100%; left:0; right:0; } 
-  nav.open { display:flex; } 
-  .menu-toggle { display:block; } 
-  nav a, nav button { padding:15px; border-top:1px solid #333; } 
-}
+.logo { height:70px; display:block; margin-right:10px; }
+.menu-toggle { display:none; font-size:22px; color:#ECECEC; background:none; border:none; }
+@media(max-width:768px){ nav { display:none; flex-direction:column; background:#111; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
 
 /* ---------- HERO ---------- */
-.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECF0F1; text-align:center; overflow:hidden; z-index:1; background:#111; }
+.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECECEC; text-align:center; overflow:hidden; z-index:1; background:#111; }
 .hero.hidden-section { display:none !important; }
 .slideshow, .slide { position:absolute; inset:0; }
-.slide { background-size:cover; height:400px; background-position:center; opacity:0; transition:opacity 0.2s; }
+.slide { background-size:cover; height:400px; background-position:center; opacity:0; transition:opacity 0.5s; }
 .slide.active { opacity:1; }
 .hero-content { position:relative; z-index:2; }
-.cta-btn { padding:10px 20px; background:#E67E22; color:#ECF0F1; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
-.cta-btn:hover { background:#D35400; }
+.cta-btn { padding:10px 20px; background:#FF6B00; color:#ECECEC; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
+.cta-btn:hover { background:#FF8C42; }
 
 /* ---------- SECTIONS ---------- */
-section { padding:40px 20px; max-width:1200px; margin:auto; background:#1E1E1E; color:#ECF0F1; font-weight:bold; }
+section { padding:40px 20px; max-width:1200px; margin:auto; background:#1C1C1C; color:#ECECEC; font-weight:bold; }
 .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-.product { background:#2C2F2F; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.3); color:#ECF0F1; font-weight:bold; }
-.product h3, .product p, .product small { color:#ECF0F1; }
-.ask-expert-btn { margin-top:6px; width:100%; background:#111; color:#E67E22; border:1px solid #E67E22; padding:8px; font-size:12px; cursor:pointer; border-radius:5px; }
-.ask-expert-btn:hover { background:#2C2F2F; border-color:#D35400; color:#D35400; }
+.product { background:#2B2D2F; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.3); color:#ECECEC; font-weight:bold; }
+.product h3, .product p, .product small { color:#ECECEC; }
+.ask-expert-btn { margin-top:6px; width:100%; background:#111; color:#FF6B00; border:1px solid #FF6B00; padding:8px; font-size:12px; cursor:pointer; border-radius:5px; }
+.ask-expert-btn:hover { background:#2B2D2F; border-color:#FF8C42; color:#FF8C42; }
 
 /* ---------- CART ---------- */
-#cart-count { background:#E67E22; padding:2px 6px; border-radius:50%; font-size:12px; }
+#cart-count { background:#FF6B00; padding:2px 6px; border-radius:50%; font-size:12px; }
 
 /* ---------- FOOTER ---------- */
-footer { text-align:center; padding:20px; background:#111; color:#D35400; }
+footer { text-align:center; padding:20px; background:#111; color:#2B2D2F; }
 
 /* ---------- ADMIN MODAL ---------- */
-.modal { position:fixed; inset:0; background:rgba(0,0,0,.8); display:flex; align-items:center; justify-content:center; z-index:2000; }
-.modal-content { background:#2C2F2F; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECF0F1; }
-.close { float:right; font-size:24px; cursor:pointer; color:#E67E22; }
+.modal { position:fixed; inset:0; background:rgba(0,0,0,.85); display:flex; align-items:center; justify-content:center; z-index:2000; display:none; }
+.modal-content { background:#2B2D2F; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECECEC; }
+.close { float:right; font-size:24px; cursor:pointer; color:#FF8C42; }
 
 /* ---------- KIMANI CHATBOT ---------- */
-#kimani-chat { position:fixed; bottom:20px; right:20px; width:250px; background:#2C2F2F; border:2px solid #E67E22; border-radius:10px; padding:10px; color:#ECF0F1; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
-#kimani-chat .avatar { font-size:50px; color:#E67E22; margin-bottom:5px; animation: bounce 1s infinite; }
-#chat-history { background:#111; color:#ECF0F1; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
+#kimani-chat { position:fixed; bottom:20px; right:20px; width:250px; background:#2B2D2F; border:2px solid #FF6B00; border-radius:10px; padding:10px; color:#ECECEC; font-size:13px; z-index:2000; display:flex; flex-direction:column; align-items:center; }
+#kimani-chat .avatar { font-size:50px; color:#FF6B00; margin-bottom:5px; }
+#chat-history { background:#111; color:#ECECEC; border-radius:8px; padding:10px; width:100%; height:150px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
 .message { margin-bottom:5px; }
-.user-msg { text-align:right; color:#D35400; }
-.ai-msg { text-align:left; color:#E67E22; }
+.user-msg { text-align:right; color:#FF8C42; }
+.ai-msg { text-align:left; color:#FF6B00; }
 #chat-input { width:100%; padding:6px; border-radius:5px; border:none; margin-bottom:5px; }
-#chat-send { width:100%; padding:6px; border:none; background:#E67E22; color:#ECF0F1; border-radius:5px; cursor:pointer; }
-#chat-send:hover { background:#D35400; }
+#chat-send { width:100%; padding:6px; border:none; background:#FF6B00; color:#ECECEC; border-radius:5px; cursor:pointer; }
+#chat-send:hover { background:#FF8C42; }
 
 /* ---------- TYPING ANIMATION ---------- */
 .typing-dots { display:inline-block; width:20px; text-align:center; }
-.typing-dots span { display:inline-block; width:4px; height:4px; margin:0 1px; background:#E67E22; border-radius:50%; animation:blink 1.4s infinite both; }
+.typing-dots span { display:inline-block; width:4px; height:4px; margin:0 1px; background:#FF6B00; border-radius:50%; animation:blink 1.4s infinite both; }
 .typing-dots span:nth-child(2) { animation-delay:.2s; }
 .typing-dots span:nth-child(3) { animation-delay:.4s; }
 @keyframes blink { 0%,80%,100% { opacity:0; } 40% { opacity:1; } }
-@keyframes bounce { 0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);} }
-
 </style>
 </head>
 <body>
@@ -110,7 +103,7 @@ footer { text-align:center; padding:20px; background:#111; color:#D35400; }
 </section>
 
 <!-- PRODUCTS -->
-<section id="products" class="page hidden-section">
+<section id="products" class="page">
   <h2>Our Products</h2>
   <div id="product-list" class="product-grid"></div>
 </section>
@@ -155,7 +148,7 @@ footer { text-align:center; padding:20px; background:#111; color:#D35400; }
 </section>
 
 <!-- ADMIN DASHBOARD -->
-<div class="modal hidden" id="adminModal">
+<div class="modal" id="adminModal">
 <div class="modal-content">
 <span class="close" id="closeAdmin">&times;</span>
 <h3>Inventory Manager</h3>
@@ -180,9 +173,9 @@ footer { text-align:center; padding:20px; background:#111; color:#D35400; }
 
 <script>
 // ---------- SPA NAVIGATION ----------
-const hero=document.querySelector(".hero");
-const pages=document.querySelectorAll(".page");
-const navLinks=document.querySelectorAll(".nav-link");
+const hero = document.querySelector(".hero");
+const pages = document.querySelectorAll(".page");
+const navLinks = document.querySelectorAll(".nav-link");
 function showPage(id){
   pages.forEach(p=>p.classList.add("hidden-section"));
   if(id!="#home"){ hero.classList.add("hidden-section"); document.querySelector(id)?.classList.remove("hidden-section"); }
@@ -199,90 +192,92 @@ document.getElementById("bookServiceBtn").onclick=()=>showPage("#products");
 const slides=document.querySelectorAll(".slide");let s=0;
 setInterval(()=>{if(!hero.classList.contains("hidden-section")){slides.forEach(sl=>sl.classList.remove("active")); s=(s+1)%slides.length; slides[s].classList.add("active");}},5000);
 
-// ---------- PRODUCTS ----------
-let products=[
-  {id:1,name:"Hybrid Battery Modules",price:500,tags:"battery module",stock:true},
-  {id:2,name:"Inverter & Power Control Unit",price:400,tags:"inverter",stock:true},
-  {id:3,name:"Cooling Fans & Pumps",price:200,tags:"cooling fan",stock:true}
-];
-function saveProducts(){localStorage.setItem("products",JSON.stringify(products));}
-function renderProducts(){
-  const list=document.getElementById("product-list"); list.innerHTML="";
-  products.forEach(p=>{
-    list.innerHTML+=`<div class="product" style="opacity:${p.stock?1:.4}">
-      <h3>${p.name}</h3>
-      <p>KES ${p.price}</p>
-      <small>${p.stock?"In Stock":"Out of Stock"}</small>
-      <button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
-      <button class="ask-expert-btn" onclick="expert('${p.tags}')">Ask Expert</button>
-    </div>`;
+// ---------- PRODUCTS & ADMIN ----------
+let products = [];
+let cart = [];
+
+function loadProducts() {
+  fetch('products.json')
+    .then(res => res.json())
+    .then(data => {
+      products = data;
+      renderProducts();
+      renderAdmin();
+    })
+    .catch(err => console.error('Failed to load products.json', err));
+}
+
+function renderProducts() {
+  const list = document.getElementById("product-list");
+  list.innerHTML = "";
+  products.forEach(p => {
+    list.innerHTML += `
+      <div class="product" style="opacity:${p.stock ? 1 : 0.4}">
+        <img src="${p.image}" alt="${p.name}" style="height:150px; object-fit:cover; margin-bottom:10px;">
+        <h3>${p.name}</h3>
+        <p>KES ${p.price}</p>
+        <small>${p.stock?"In Stock":"Out of Stock"}</small><br>
+        <button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart(${p.id})">Add to Cart</button>
+        <button class="ask-expert-btn" onclick="expert('${p.tags}')">Ask Expert</button>
+      </div>
+    `;
   });
 }
-renderProducts();
 
-// ---------- ADMIN DASHBOARD ----------
-const modal=document.getElementById("adminModal");
-const adminBtn=document.getElementById("adminLoginBtn");
-const closeAdmin=document.getElementById("closeAdmin");
-if(adminBtn && modal) adminBtn.onclick=()=>modal.classList.remove("hidden");
-if(closeAdmin && modal) closeAdmin.onclick=()=>modal.classList.add("hidden");
-
-function renderAdmin(){
-  const list=document.getElementById("admin-list"); list.innerHTML="";
-  products.forEach(p=>{
-    list.innerHTML+=`<li>${p.name} - ${p.stock?"IN":"OUT"} 
-    <button onclick="toggleStock(${p.id})">Toggle</button></li>`;
+function renderAdmin() {
+  const list = document.getElementById("admin-list");
+  list.innerHTML = "";
+  products.forEach(p => {
+    list.innerHTML += `<li>${p.name} - ${p.stock?"IN":"OUT"} 
+      <button onclick="toggleStock(${p.id})">Toggle</button>
+    </li>`;
   });
 }
+
 function addProduct(){
   const name=document.getElementById("pname").value;
   const price=+document.getElementById("pprice").value;
   const tags=document.getElementById("ptags").value;
-  if(!name||!price) return alert("Name & Price required");
-  products.push({id:Date.now(),name,price,tags,stock:true});
-  saveProducts(); renderProducts(); renderAdmin();
+  if(!name||!price)return alert("Name & Price required");
+  products.push({id:Date.now(),name,price,stock:true,tags,image:"images/default.png"});
+  renderProducts(); renderAdmin();
   document.getElementById("pname").value=""; document.getElementById("pprice").value=""; document.getElementById("ptags").value="";
 }
-function toggleStock(id){ const p=products.find(x=>x.id===id); p.stock=!p.stock; saveProducts(); renderProducts(); renderAdmin(); }
-renderAdmin();
-document.getElementById("addProductBtn").onclick=addProduct;
 
-// ---------- CART ----------
-let cart=[];
-function addToCart(name,price){ cart.push({name,price}); updateCart(); showPage("#cart"); }
+function toggleStock(id){ const p=products.find(x=>x.id===id); p.stock=!p.stock; renderProducts(); renderAdmin(); }
+function addToCart(id){ const p=products.find(x=>x.id===id); if(!p) return; cart.push({name:p.name,price:p.price}); updateCart(); showPage("#cart"); }
 function updateCart(){ const cartItems=document.getElementById("cart-items"); let total=0; cartItems.innerHTML=""; cart.forEach(item=>{ cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price; }); document.getElementById("cart-count").textContent=cart.length; document.getElementById("cart-total").textContent=`Total: KES ${total}`; }
+
+document.getElementById("addProductBtn").onclick=addProduct;
 document.getElementById("checkoutPaybill").onclick=()=>{if(cart.length===0)return alert("Cart empty"); document.getElementById("paybill-info").classList.remove("hidden-section"); };
-document.getElementById("confirmPaymentBtn").onclick=()=>{
-  if(cart.length===0)return alert("Cart empty");
-  let msg="Payment Confirmation for Order:%0A"; let total=0;
-  cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
-  msg+=`Total Paid: KES ${total}`;
-  window.open(`https://wa.me/254780328599?text=${msg}`);
-};
-document.getElementById("waOrder").onclick=()=>{
-  if(cart.length===0)return alert("Cart empty"); let msg="HYBRID CENTRE ORDER%0A-----------------%0A"; let total=0;
-  cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
-  msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;
-  window.open(`https://wa.me/254780328599?text=${msg}`);
-};
+document.getElementById("confirmPaymentBtn").onclick=()=>{ if(cart.length===0)return alert("Cart empty"); let msg="Payment Confirmation for Order:%0A"; let total=0; cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; }); msg+=`Total Paid: KES ${total}`; window.open(`https://wa.me/254780328599?text=${msg}`); };
+document.getElementById("waOrder").onclick=()=>{ if(cart.length===0)return alert("Cart empty"); let msg="HYBRID CENTRE ORDER%0A-----------------%0A"; let total=0; cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; }); msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`; window.open(`https://wa.me/254780328599?text=${msg}`); };
 document.getElementById("stkBtn").onclick=()=>alert("STK Push coming soon!");
+
+// ---------- ADMIN MODAL ----------
+const modal=document.getElementById("adminModal");
+const adminBtn=document.getElementById("adminLoginBtn");
+const closeAdmin=document.getElementById("closeAdmin");
+if(adminBtn && modal) adminBtn.onclick=()=>modal.style.display="flex";
+if(closeAdmin && modal) closeAdmin.onclick=()=>modal.style.display="none";
 
 // ---------- KIMANI CHATBOT ----------
 const chatHistory=document.getElementById("chat-history");
 const chatInput=document.getElementById("chat-input");
 const chatSend=document.getElementById("chat-send");
 
-function addMessage(text,sender){
+function addMessage(text,sender,html=false){
   const div=document.createElement("div");
-  div.classList.add("message", sender==="user"?"user-msg":"ai-msg");
-  div.innerHTML=text;
+  div.classList.add("message",sender==="user"?"user-msg":"ai-msg");
+  html?div.innerHTML=text:div.textContent=text;
   chatHistory.appendChild(div);
   chatHistory.scrollTop=chatHistory.scrollHeight;
 }
 
-function kimaniReply(input){
-  input=input.toLowerCase();
-  if(input.includes("hello")||input.includes("hi")) return "Hey there! Kimani here, ready to help with your hybrid vehicle.";
-  if(input.includes("battery")) return "Check your hybrid battery connections and charge! Need step-by-step guidance?";
-  if(input.includes("cooling")) return "Check cooling fans and coolant levels. I can guide you through it.";
-  if(input.includes("price")) return "All part prices are listed on the Products page. You can also ask me about stock availability.";
+chatSend.onclick=()=>{ const val=chatInput.value.trim(); if(!val)return; addMessage(val,"user"); chatInput.value=""; setTimeout(()=>kimaniReply(val),500); };
+chatInput.addEventListener("keypress", e=>{ if(e.key==="Enter") chatSend.click(); });
+
+function kimaniReply(text){
+  text=text.toLowerCase();
+  if(text.includes("battery")) addMessage("I see you need a battery module. We have hybrid batteries in stock!","ai");
+  else if(text.includes("inverter")) addMessage("For inverters, check
