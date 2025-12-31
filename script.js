@@ -1,149 +1,137 @@
-// ---------- SPA NAVIGATION ----------
-const hero = document.querySelector(".hero");
-const pages = document.querySelectorAll(".page");
-const navLinks = document.querySelectorAll(".nav-link");
-function showPage(id){
-  pages.forEach(p=>p.classList.add("hidden-section"));
-  if(id!="#home"){ hero.classList.add("hidden-section"); document.querySelector(id)?.classList.remove("hidden-section"); }
-  else hero.classList.remove("hidden-section");
-  navLinks.forEach(l=>l.classList.remove("active"));
-  document.querySelector(`a[href="${id}"]`)?.classList.add("active");
-  history.pushState(null,"",id);
-}
-navLinks.forEach(l=>l.addEventListener("click", e=>{ e.preventDefault(); showPage(l.getAttribute("href")); document.querySelector("nav").classList.remove("open"); }));
-document.getElementById("menuToggle").onclick=()=>document.querySelector("nav").classList.toggle("open");
-document.getElementById("bookServiceBtn").onclick=()=>showPage("#products");
+document.addEventListener('DOMContentLoaded', async () => {
+  // SPA Navigation
+  const hero = document.querySelector('.hero');
+  const pages = document.querySelectorAll('.page');
+  const navLinks = document.querySelectorAll('.nav-link');
+  function showPage(id) {
+    pages.forEach(p => p.classList.add('hidden-section'));
+    if (id !== '#home') hero.classList.add('hidden-section');
+    else hero.classList.remove('hidden-section');
+    const target = document.querySelector(id);
+    if (target) target.classList.remove('hidden-section');
+    navLinks.forEach(l => l.classList.remove('active'));
+    const link = document.querySelector(`a[href="${id}"]`);
+    if (link) link.classList.add('active');
+    history.pushState(null, '', id);
+  }
+  navLinks.forEach(l => l.addEventListener('click', e => { e.preventDefault(); showPage(l.getAttribute('href')); document.querySelector('nav').classList.remove('open'); }));
+  document.getElementById('menuToggle').onclick = () => document.querySelector('nav').classList.toggle('open');
+  document.getElementById('bookServiceBtn').onclick = () => showPage('#products');
 
-// ---------- PRODUCTS ----------
-let products = JSON.parse(localStorage.getItem("products")) || [
-  { id: 1, name: "Hybrid Battery Modules", price: 500, description: "High quality battery module", image: "images/products/battery_module-8.png", stock: true },
-  { id: 2, name: "Inverter & Power Control Unit", price: 400, description: "Efficient inverter", image: "images/products/inverter.png", stock: true },
-  { id: 3, name: "Cooling Fans & Pumps", price: 200, description: "Cooling solution", image: "images/products/cooling.png", stock: true }
-];
-function saveProducts() { localStorage.setItem("products", JSON.stringify(products)); }
+  // Hero Slideshow
+  const slides = document.querySelectorAll('.slide'); let s = 0;
+  setInterval(() => {
+    if (!hero.classList.contains('hidden-section')) {
+      slides.forEach(sl => sl.classList.remove('active'));
+      s = (s + 1) % slides.length;
+      slides[s].classList.add('active');
+    }
+  }, 5000);
 
-// ---------- RENDER PRODUCTS ----------
-function renderProducts() {
-  const list = document.getElementById("product-list");
-  list.innerHTML = "";
-  products.forEach(p => {
-    const productDiv = document.createElement("div");
-    productDiv.className = "product";
-    productDiv.style.opacity = p.stock ? 1 : 0.4;
-    productDiv.innerHTML = `
-      <img src="${p.image}" alt="${p.name}" style="width:100px; height:100px; object-fit:contain;">
-      <h3>${p.name}</h3>
-      <p>KES ${p.price}</p>
-      <small>${p.stock ? "In Stock" : "Out of Stock"}</small>
-      <button class="cta-btn" ${!p.stock ? "disabled" : ""} data-id="${p.id}">Add to Cart</button>
-      <button class="ask-expert-btn">Ask Expert</button>
-    `;
-    // Add to cart click
-    productDiv.querySelector(".cta-btn").addEventListener("click", () => addToCart(p.name, p.price));
-    list.appendChild(productDiv);
-  });
-}
-renderProducts();
+  // Fetch products.json
+  let products = [];
+  async function fetchProducts() {
+    try {
+      const res = await fetch('products.json');
+      products = await res.json();
+      renderProducts();
+      renderAdmin();
+    } catch (err) {
+      console.error('Failed to fetch products.json', err);
+    }
+  }
+  fetchProducts();
 
-// ---------- ADMIN DASHBOARD ----------
-const modal = document.getElementById("adminModal");
-const adminBtn = document.getElementById("adminLoginBtn");
-const closeAdmin = document.getElementById("closeAdmin");
-const addProductBtn = document.getElementById("addProductBtn");
-const adminList = document.getElementById("admin-list");
+  // Render products section
+  const productList = document.getElementById('product-list');
+  function renderProducts() {
+    if (!productList) return;
+    productList.innerHTML = '';
+    products.forEach(p => {
+      productList.innerHTML += `
+        <div class="product" style="opacity:${p.stock?1:.4}">
+          <img src="${p.image}" alt="${p.name}" style="width:100%; height:150px; object-fit:contain; margin-bottom:5px;">
+          <h3>${p.name}</h3>
+          <p>KES ${p.price}</p>
+          <small>${p.stock?"In Stock":"Out of Stock"}</small><br>
+          <button class="cta-btn" ${!p.stock?"disabled":""} onclick="addToCart('${p.name}',${p.price})">Add to Cart</button>
+          <button class="ask-expert-btn" onclick="askExpert('${p.tags}')">Ask Expert</button>
+        </div>`;
+    });
+  }
 
-if (adminBtn && modal) adminBtn.onclick = () => {
-  modal.classList.remove("hidden");
-  renderAdmin();
-};
-if (closeAdmin && modal) closeAdmin.onclick = () => modal.classList.add("hidden");
+  // Admin Panel
+  const modal = document.getElementById('adminModal');
+  const adminBtn = document.getElementById('adminLoginBtn');
+  const closeAdmin = document.getElementById('closeAdmin');
+  const adminList = document.getElementById('admin-list');
+  const addProductBtn = document.getElementById('addProductBtn');
 
-function renderAdmin() {
-  adminList.innerHTML = "";
-  products.forEach(p => {
-    const li = document.createElement("li");
-    li.innerHTML = `${p.name} - ${p.stock ? "IN" : "OUT"} 
-      <button class="toggle-stock" data-id="${p.id}">Toggle</button>
-      <button class="delete-product" data-id="${p.id}">Delete</button>`;
-    adminList.appendChild(li);
-  });
+  adminBtn.onclick = () => modal.classList.remove('hidden');
+  closeAdmin.onclick = () => modal.classList.add('hidden');
 
-  // Attach toggle event listeners dynamically
-  document.querySelectorAll(".toggle-stock").forEach(btn => {
-    btn.onclick = () => {
-      const id = parseInt(btn.dataset.id);
-      toggleStock(id);
-    };
-  });
+  function renderAdmin() {
+    if (!adminList) return;
+    adminList.innerHTML = '';
+    products.forEach((p, idx) => {
+      adminList.innerHTML += `<li>${p.name} - ${p.stock?"IN":"OUT"} 
+      <button data-idx="${idx}" class="toggle-stock-btn">Toggle</button></li>`;
+    });
+    document.querySelectorAll('.toggle-stock-btn').forEach(btn => {
+      btn.onclick = () => {
+        const idx = btn.dataset.idx;
+        products[idx].stock = !products[idx].stock;
+        renderAdmin();
+        renderProducts();
+      };
+    });
+  }
 
-  // Attach delete event listeners dynamically
-  document.querySelectorAll(".delete-product").forEach(btn => {
-    btn.onclick = () => {
-      const id = parseInt(btn.dataset.id);
-      deleteProduct(id);
-    };
-  });
-}
-
-function addProduct() {
-  const name = document.getElementById("pname").value.trim();
-  const price = parseFloat(document.getElementById("pprice").value);
-  const tags = document.getElementById("ptags").value.trim();
-  const image = document.getElementById("pimage").value.trim();
-
-  if (!name || !price || !image) return alert("Name, Price, and Image are required!");
-
-  const newProduct = {
-    id: Date.now(),
-    name,
-    price,
-    tags,
-    stock: true,
-    image
+  addProductBtn.onclick = () => {
+    const name = document.getElementById('pname').value.trim();
+    const price = +document.getElementById('pprice').value;
+    const tags = document.getElementById('ptags').value.trim();
+    const image = document.getElementById('pimage').value.trim();
+    if (!name || !price || !image) return alert('Name, Price, and Image required');
+    products.push({id: Date.now(), name, price, tags, image, stock:true});
+    renderAdmin();
+    renderProducts();
+    document.getElementById('pname').value=''; document.getElementById('pprice').value=''; document.getElementById('ptags').value=''; document.getElementById('pimage').value='';
   };
-  products.push(newProduct);
-  saveProducts();
-  renderProducts();
-  renderAdmin();
 
-  // Reset form
-  document.getElementById("pname").value = "";
-  document.getElementById("pprice").value = "";
-  document.getElementById("ptags").value = "";
-  document.getElementById("pimage").value = "";
-}
-addProductBtn.onclick = addProduct;
+  // CART
+  let cart = [];
+  window.addToCart = function(name, price){
+    cart.push({name, price});
+    updateCart();
+    showPage('#cart');
+  };
+  function updateCart(){
+    const cartItems = document.getElementById('cart-items');
+    if(!cartItems) return;
+    let total = 0;
+    cartItems.innerHTML = '';
+    cart.forEach(i=>{ cartItems.innerHTML += `${i.name} - KES ${i.price}<br>`; total+=i.price; });
+    document.getElementById('cart-count').textContent = cart.length;
+    document.getElementById('cart-total').textContent = `Total: KES ${total}`;
+  }
+  document.getElementById('checkoutPaybill').onclick = () => {
+    if(cart.length===0) return alert('Cart empty');
+    document.getElementById('paybill-info').classList.remove('hidden-section');
+  };
+  document.getElementById('confirmPaymentBtn').onclick = () => {
+    if(cart.length===0) return alert('Cart empty');
+    let msg = "Payment Confirmation:%0A"; let total = 0;
+    cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
+    msg+=`Total Paid: KES ${total}`;
+    window.open(`https://wa.me/254780328599?text=${msg}`);
+  };
+  document.getElementById('waOrder').onclick = () => {
+    if(cart.length===0) return alert('Cart empty');
+    let msg="HYBRID CENTRE ORDER%0A-----------------%0A"; let total=0;
+    cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
+    msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;
+    window.open(`https://wa.me/254780328599?text=${msg}`);
+  };
 
-function toggleStock(id) {
-  const p = products.find(x => x.id === id);
-  if (p) p.stock = !p.stock;
-  saveProducts();
-  renderProducts();
-  renderAdmin();
-}
-
-function deleteProduct(id) {
-  products = products.filter(x => x.id !== id);
-  saveProducts();
-  renderProducts();
-  renderAdmin();
-}
-
-// Initial render
-renderAdmin();
-
-
-// ---------- CART ----------
-let cart=[];
-function addToCart(name,price){ cart.push({name,price}); updateCart(); showPage("#cart"); }
-function updateCart(){ const cartItems=document.getElementById("cart-items"); let total=0; cartItems.innerHTML=""; cart.forEach(item=>{ cartItems.innerHTML+=`${item.name} - KES ${item.price}<br>`; total+=item.price; }); document.getElementById("cart-count").textContent=cart.length; document.getElementById("cart-total").textContent=`Total: KES ${total}`; }
-document.getElementById("checkoutPaybill").onclick=()=>{if(cart.length===0)return alert("Cart empty"); document.getElementById("paybill-info").classList.remove("hidden-section"); };
-document.getElementById("confirmPaymentBtn").onclick=()=>{
-  if(cart.length===0)return alert("Cart empty");
-  let msg="Payment Confirmation for Order:%0A"; let total=0;
-  cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; });
-  msg+=`Total Paid: KES ${total}`;
-  window.open(`https://wa.me/254780328599?text=${msg}`);
-};
-document.getElementById("waOrder").onclick=()=>{ if(cart.length===0)return alert("Cart empty"); let msg="HYBRID CENTRE ORDER%0A-----------------%0A"; let total=0; cart.forEach(i=>{ msg+=`${i.name} - KES ${i.price}%0A`; total+=i.price; }); msg+=`-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`; window.open(`https://wa.me/254780328599?text=${msg}`); };
-document.getElementById("stkBtn").onclick=()=>alert("STK Push coming soon!");
+});
