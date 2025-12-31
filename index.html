@@ -4,34 +4,40 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Hybrid Spares Shop</title>
+
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 <header class="site-header">
   <div class="logo-container">
     <img src="images/logo.png" class="logo" alt="Hybrid Centre Logo">
     <h2>HYBRID CENTRE</h2>
   </div>
-  <button class="menu-toggle" id="menuToggle"><i class="fa fa-bars"></i></button>
+
+  <button class="menu-toggle" id="menuToggle">
+    <i class="fa fa-bars"></i>
+  </button>
+
   <nav>
-      <a href="#home" class="nav-link">Home</a>
-      <a href="#products" class="nav-link">Products</a>
-      <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
-      <a href="#payment" class="nav-link">Payment</a>
-      <a href="#location" class="nav-link">Location</a>
-      <a href="#contact" class="nav-link">Contact</a>
-      <button id="adminLoginBtn">Admin</button>
+    <a href="#home" class="nav-link">Home</a>
+    <a href="#products" class="nav-link">Products</a>
+    <a href="#cart" class="nav-link">Cart (<span id="cart-count">0</span>)</a>
+    <a href="#payment" class="nav-link">Payment</a>
+    <a href="#location" class="nav-link">Location</a>
+    <a href="#contact" class="nav-link">Contact</a>
+    <button id="adminLoginBtn">Admin</button>
   </nav>
 </header>
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 <section class="hero" id="home">
   <div class="slideshow">
     <div class="slide active" style="background-image:url('images/hero1.png')"></div>
   </div>
+
   <div class="hero-content">
     <h1>Hybrid Vehicle Spares</h1>
     <p>Quality • Batteries • Modules</p>
@@ -39,82 +45,115 @@
   </div>
 </section>
 
-<!-- PRODUCTS -->
+<!-- ================= PRODUCTS ================= -->
 <section id="products" class="page hidden-section">
   <h2>Our Products</h2>
   <div id="product-list" class="product-grid"></div>
 </section>
 
-<!-- CART -->
+<!-- ================= CART ================= -->
 <section id="cart" class="page hidden-section">
   <h2>Your Cart</h2>
   <div id="cart-items"></div>
   <h3 id="cart-total">Total: 0</h3>
+
   <button class="cta-btn" id="checkoutPaybill">Checkout via Paybill</button>
   <button class="cta-btn" id="waOrder">Order via WhatsApp</button>
+
   <div id="paybill-info" class="hidden-section">
-    <h4>Pay via M-Pesa Paybill</h4>
+    <h4>M-Pesa Paybill</h4>
     <ul>
-      <li>Paybill Number: <strong>222111</strong></li>
-      <li>Account Number: <strong>5825469</strong></li>
-      <li>Business Name: <strong>Hybrid Centre</strong></li>
+      <li>Paybill: <strong>222111</strong></li>
+      <li>Account: <strong>5825469</strong></li>
+      <li>Name: <strong>Hybrid Centre</strong></li>
     </ul>
-    <button class="cta-btn" id="confirmPaymentBtn">Send Confirmation via WhatsApp</button>
+    <button class="cta-btn" id="confirmPaymentBtn">
+      Send Confirmation via WhatsApp
+    </button>
   </div>
 </section>
 
-<!-- PAYMENT -->
+<!-- ================= PAYMENT ================= -->
 <section id="payment" class="page hidden-section">
   <h2>Payment</h2>
-  <p>Via M-Pesa Paybill</p>
-  <button class="cta-btn" id="stkBtn">STK Push (Coming Soon)</button>
+  <p>M-Pesa Paybill supported</p>
+  <button class="cta-btn" disabled>STK Push (Coming Soon)</button>
 </section>
 
-<!-- LOCATION -->
+<!-- ================= LOCATION ================= -->
 <section id="location" class="page hidden-section">
   <h2>Location</h2>
   <p>Kirinyaga Road, behind Indian Mosque, Grogon Lane, Nairobi</p>
-  <iframe width="100%" height="300" src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+Lane+Nairobi&output=embed"></iframe>
+  <iframe
+    width="100%"
+    height="300"
+    src="https://www.google.com/maps?q=Kirinyaga+Road+behind+Indian+Mosque+Grogon+Lane+Nairobi&output=embed">
+  </iframe>
 </section>
 
-<!-- CONTACT -->
+<!-- ================= CONTACT ================= -->
 <section id="contact" class="page hidden-section">
   <h2>Contact</h2>
   <p>Call: <a href="tel:+254780328599">+254 780 328 599</a></p>
   <p>WhatsApp: <a href="https://wa.me/254780328599" target="_blank">Chat</a></p>
 </section>
 
-<!-- ADMIN DASHBOARD -->
+<!-- ================= ADMIN LOGIN ================= -->
+<div class="modal hidden" id="adminLoginModal">
+  <div class="modal-content">
+    <h3>Admin Login</h3>
+    <input type="password" id="adminPassword" placeholder="Admin password">
+    <button id="adminAccessBtn">Login</button>
+    <p id="adminError" style="display:none;color:red;">Access denied</p>
+  </div>
+</div>
+
+<!-- ================= ADMIN DASHBOARD ================= -->
 <div class="modal hidden" id="adminModal">
   <div class="modal-content">
     <span class="close" id="closeAdmin">&times;</span>
     <h3>Inventory Manager</h3>
+
     <input id="pname" placeholder="Product name">
     <input id="pprice" type="number" placeholder="Price">
-    <input id="ptags" placeholder="Tags (optional)">
-    <input id="pimage" placeholder="Image path (e.g. images/products/battery_module-8.png)">
+    <input id="ptags" placeholder="Tags">
+    <input id="pimage" placeholder="images/products/example.png">
+
     <button id="addProductBtn">Add Product</button>
-    <h4>Current Inventory:</h4>
+
+    <h4>Current Inventory</h4>
     <ul id="admin-list"></ul>
+
+    <p style="font-size:12px;color:#888">
+      ⚠ GitHub Pages is read-only. Commit product changes manually.
+    </p>
   </div>
 </div>
 
-<!-- KIMANI CHATBOT -->
+<!-- ================= CHATBOT (UNCHANGED) ================= -->
 <div id="chatbot-container" class="hidden">
   <div id="chatbot-header">
     <span>Kimani <i class="fa-solid fa-user-gear"></i></span>
     <button id="chatbot-close"><i class="fa fa-times"></i></button>
   </div>
-  <div id="chatbot-messages">Hi! I’m Kimani, your hybrid mechanic.</div>
+  <div id="chatbot-messages">
+    Hi! I’m Kimani, your hybrid mechanic.
+  </div>
   <input type="text" id="chatbot-input" placeholder="Ask me about products or services...">
   <button id="chatbot-send">Send</button>
 </div>
-<button id="chatbot-toggle"><i class="fa-solid fa-robot"></i></button>
+
+<button id="chatbot-toggle">
+  <i class="fa-solid fa-robot"></i>
+</button>
 
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
 
-<script src="script.js"></script>
-<script src="chatbot.js"></script>
-  <script src="admin.js"></script>
+<!-- ================= SCRIPTS ================= -->
+<script src="script.js" defer></script>
+<script src="chatbot.js" defer></script>
+  <script src="admin.js" defer></script>
+
+
 </body>
 </html>
