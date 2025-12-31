@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hybrid Spares Shop</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hybrid Spares Shop</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
 
@@ -31,9 +31,6 @@
 <section class="hero" id="home">
   <div class="slideshow">
     <div class="slide active" style="background-image:url('images/hero1.png')"></div>
-    <div class="slide" style="background-image:url('images/hero2.png')"></div>
-    <div class="slide" style="background-image:url('images/hero3.png')"></div>
-    <div class="slide" style="background-image:url('images/hero4.png')"></div>
   </div>
   <div class="hero-content">
     <h1>Hybrid Vehicle Spares</h1>
@@ -95,65 +92,28 @@
     <input id="pname" placeholder="Product name">
     <input id="pprice" type="number" placeholder="Price">
     <input id="ptags" placeholder="Tags (optional)">
-    <input id="pimage" placeholder="Image path (images/products/xxx.png)">
+    <input id="pimage" placeholder="Image path (e.g. images/products/battery_module-8.png)">
     <button id="addProductBtn">Add Product</button>
     <h4>Current Inventory:</h4>
     <ul id="admin-list"></ul>
   </div>
 </div>
 
-<!-- Chatbot toggle -->
-<button id="chatbot-toggle" class="chatbot-toggle">
-  <i class="fa-solid fa-user-gear"></i> Kimani
-</button>
-
-<!-- Chatbot container -->
-<div id="chatbot-container" class="chatbot hidden">
+<!-- KIMANI CHATBOT -->
+<div id="chatbot-container" class="hidden">
   <div id="chatbot-header">
-    <span>Kimani - Hybrid Mechanic</span>
-    <button id="chatbot-close">&times;</button>
+    <span>Kimani <i class="fa-solid fa-user-gear"></i></span>
+    <button id="chatbot-close"><i class="fa fa-times"></i></button>
   </div>
-  <div id="chatbot-messages" class="chatbot-messages">
-    <div class="bot-message">Hi! I’m Kimani, your hybrid mechanic. Ask me anything!</div>
-  </div>
-  <input type="text" id="chatbot-input" placeholder="Type your question...">
+  <div id="chatbot-messages">Hi! I’m Kimani, your hybrid mechanic.</div>
+  <input type="text" id="chatbot-input" placeholder="Ask me about products or services...">
   <button id="chatbot-send">Send</button>
-  <div id="chatbot-options">
-    <button data-option="services">Services</button>
-    <button data-option="book">Book</button>
-    <button id="whatsapp-chat">WhatsApp</button>
-  </div>
 </div>
+<button id="chatbot-toggle"><i class="fa-solid fa-robot"></i></button>
 
-<!-- Include JS files -->
-<script src="script.js"></script>
-<script src="chatbot.js"></script>
-<!-- Chatbot toggle -->
-<button id="chatbot-toggle" class="chatbot-toggle">
-  <i class="fa-solid fa-user-gear"></i> Kimani
-</button>
-
-<!-- Chatbot container -->
-<div id="chatbot-container" class="chatbot hidden">
-  <div id="chatbot-header">
-    <span>Kimani - Hybrid Mechanic</span>
-    <button id="chatbot-close">&times;</button>
-  </div>
-  <div id="chatbot-messages" class="chatbot-messages">
-    <div class="bot-message">Hi! I’m Kimani, your hybrid mechanic. Ask me anything!</div>
-  </div>
-  <input type="text" id="chatbot-input" placeholder="Type your question...">
-  <button id="chatbot-send">Send</button>
-  <div id="chatbot-options">
-    <button data-option="services">Services</button>
-    <button data-option="book">Book</button>
-    <button id="whatsapp-chat">WhatsApp</button>
-  </div>
-</div>
 <footer>&copy; 2025 Hybrid Spares Shop</footer>
-<!-- Include JS files -->
+
 <script src="script.js"></script>
 <script src="chatbot.js"></script>
-
 </body>
 </html>
