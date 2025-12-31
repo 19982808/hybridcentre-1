@@ -60,45 +60,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Admin Panel
-  const modal = document.getElementById('adminModal');
-  const adminBtn = document.getElementById('adminLoginBtn');
-  const closeAdmin = document.getElementById('closeAdmin');
-  const adminList = document.getElementById('admin-list');
-  const addProductBtn = document.getElementById('addProductBtn');
-
-  adminBtn.onclick = () => modal.classList.remove('hidden');
-  closeAdmin.onclick = () => modal.classList.add('hidden');
-
-  function renderAdmin() {
-    if (!adminList) return;
-    adminList.innerHTML = '';
-    products.forEach((p, idx) => {
-      adminList.innerHTML += `<li>${p.name} - ${p.stock?"IN":"OUT"} 
-      <button data-idx="${idx}" class="toggle-stock-btn">Toggle</button></li>`;
-    });
-    document.querySelectorAll('.toggle-stock-btn').forEach(btn => {
-      btn.onclick = () => {
-        const idx = btn.dataset.idx;
-        products[idx].stock = !products[idx].stock;
-        renderAdmin();
-        renderProducts();
-      };
-    });
-  }
-
-  addProductBtn.onclick = () => {
-    const name = document.getElementById('pname').value.trim();
-    const price = +document.getElementById('pprice').value;
-    const tags = document.getElementById('ptags').value.trim();
-    const image = document.getElementById('pimage').value.trim();
-    if (!name || !price || !image) return alert('Name, Price, and Image required');
-    products.push({id: Date.now(), name, price, tags, image, stock:true});
-    renderAdmin();
-    renderProducts();
-    document.getElementById('pname').value=''; document.getElementById('pprice').value=''; document.getElementById('ptags').value=''; document.getElementById('pimage').value='';
-  };
-
+ 
   // CART
   let cart = [];
   window.addToCart = function(name, price){
