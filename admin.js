@@ -1,121 +1,87 @@
 document.addEventListener('DOMContentLoaded', () => {
-
-  const ADMIN_PASSWORD = "1234"; // 🔒 change this
-
-  const adminLoginBtn = document.getElementById('adminLoginBtn');
-  const adminLoginModal = document.getElementById('adminLoginModal');
   const adminModal = document.getElementById('adminModal');
+  const adminBtn = document.getElementById('adminLoginBtn');
   const closeAdmin = document.getElementById('closeAdmin');
 
-  const adminAccessBtn = document.getElementById('adminAccessBtn');
-  const adminPassword = document.getElementById('adminPassword');
-  const adminError = document.getElementById('adminError');
-
-  const adminList = document.getElementById('admin-list');
+  const pname = document.getElementById('pname');
+  const pprice = document.getElementById('pprice');
+  const ptags = document.getElementById('ptags');
+  const pimage = document.getElementById('pimage');
   const addProductBtn = document.getElementById('addProductBtn');
+  const adminList = document.getElementById('admin-list');
 
-  // ================= OPEN LOGIN =================
-  adminLoginBtn.onclick = () => {
-    adminLoginModal.classList.remove('hidden');
-  };
+  let products = JSON.parse(localStorage.getItem('products')) || [];
 
-  // ================= LOGIN =================
-  adminAccessBtn.onclick = () => {
-    if (adminPassword.value === ADMIN_PASSWORD) {
-      adminLoginModal.classList.add('hidden');
-      adminModal.classList.remove('hidden');
-      adminPassword.value = '';
-      adminError.style.display = 'none';
-      renderAdmin();
-    } else {
-      adminError.style.display = 'block';
-    }
-  };
+  // ---------- SHOW / HIDE ADMIN MODAL ----------
+  adminBtn.onclick = () => adminModal.classList.remove('hidden-section');
+  closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
 
-  // ================= CLOSE ADMIN =================
-  closeAdmin.onclick = () => {
-    adminModal.classList.add('hidden');
-  };
-
-  // ================= LOAD PRODUCTS =================
-  function getProducts() {
-    const stored = localStorage.getItem('adminProducts');
-    if (stored) return JSON.parse(stored);
-
-    // fallback to products.json if no local edits
-    return window.products || [];
-  }
-
-  // ================= SAVE PRODUCTS =================
-  function saveProducts(data) {
-    localStorage.setItem('adminProducts', JSON.stringify(data));
-  }
-
-  // ================= RENDER ADMIN =================
+  // ---------- RENDER ADMIN LIST ----------
   function renderAdmin() {
-    if (!adminList) return;
-
-    const products = getProducts();
     adminList.innerHTML = '';
-
     products.forEach((p, index) => {
       const li = document.createElement('li');
       li.innerHTML = `
-        <strong>${p.name}</strong> – KES ${p.price}
-        <button data-index="${index}" class="delete-btn">❌</button>
+        <img src="${p.image}" alt="${p.name}" style="width:50px; height:50px; object-fit:contain; margin-right:10px;">
+        <strong>${p.name}</strong> - KES ${p.price} - ${p.stock ? 'In Stock' : 'Out of Stock'}
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
       `;
       adminList.appendChild(li);
-    });
 
-    document.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.onclick = () => {
-        const products = getProducts();
-        products.splice(btn.dataset.index, 1);
-        saveProducts(products);
+      // Edit functionality
+      li.querySelector('.edit-btn').onclick = () => {
+        const newPrice = prompt('Enter new price:', p.price);
+        const newStock = confirm('Is this product in stock? OK = Yes, Cancel = No');
+        if (newPrice !== null) p.price = parseFloat(newPrice);
+        p.stock = newStock;
+        saveProducts();
         renderAdmin();
-        renderProductsFromAdmin();
+        renderProducts();
+      };
+
+      // Delete functionality
+      li.querySelector('.delete-btn').onclick = () => {
+        if (confirm(`Delete ${p.name}?`)) {
+          products.splice(index, 1);
+          saveProducts();
+          renderAdmin();
+          renderProducts();
+        }
       };
     });
   }
 
-  // ================= ADD PRODUCT =================
+  // ---------- ADD PRODUCT ----------
   addProductBtn.onclick = () => {
-    const name = document.getElementById('pname').value.trim();
-    const price = Number(document.getElementById('pprice').value);
-    const tags = document.getElementById('ptags').value.trim();
-    const image = document.getElementById('pimage').value.trim();
-
-    if (!name || !price || !image) {
-      alert('Fill name, price and image');
-      return;
-    }
-
-    const products = getProducts();
-
-    products.push({
-      id: Date.now(),
-      name,
-      price,
-      tags,
+    if (!pname.value || !pprice.value || !pimage.value) return alert('Please fill in name, price, and image');
+    const newProduct = {
+      id: products.length + 1,
+      name: pname.value,
+      price: parseFloat(pprice.value),
+      tags: ptags.value || "",
       stock: true,
-      image
-    });
-
-    saveProducts(products);
+      image: pimage.value
+    };
+    products.push(newProduct);
+    saveProducts();
     renderAdmin();
-    renderProductsFromAdmin();
-
-    document.getElementById('pname').value = '';
-    document.getElementById('pprice').value = '';
-    document.getElementById('ptags').value = '';
-    document.getElementById('pimage').value = '';
+    renderProducts();
+    pname.value = pprice.value = ptags.value = pimage.value = '';
   };
 
-  // ================= SYNC TO SHOP =================
-  function renderProductsFromAdmin() {
-    if (typeof window.renderProducts === 'function') {
-      window.renderProducts(getProducts());
-    }
+  // ---------- SAVE / LOAD FROM LOCALSTORAGE ----------
+  function saveProducts() {
+    localStorage.setItem('products', JSON.stringify(products));
+    logAdminActivity('Updated inventory');
   }
 
+  // ---------- ADMIN ACTIVITY LOG ----------
+  function logAdminActivity(msg) {
+    console.log(`Admin Log: ${msg} at ${new Date().toLocaleString()}`);
+  }
+
+  // INITIAL RENDER
+  renderAdmin();
+  if (!window.renderProducts) window.renderProducts = () => {};
 });
