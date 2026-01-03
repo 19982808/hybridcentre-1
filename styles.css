@@ -8,7 +8,7 @@ nav a, nav button { color:#ECF0F1; background:none; border:none; margin-left:15p
 nav a.active { color:#A85C00; border-bottom:2px solid #ECF0F1; }
 .logo-container { display:flex; align-items:center; }
 .logo {
-  height: 250px;      /* adjust this to make it taller */
+  height: 150px;      /* adjust this to make it taller */
   width: 250px;        /* keeps the aspect ratio */
   margin-right: 15px; /* space between logo and nav */
   object-fit: contain; /* ensures the logo fits nicely */
