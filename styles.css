@@ -15,7 +15,7 @@ nav a.active { color:#A85C00; border-bottom:2px solid #ECF0F1; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #111;
+  background: #0D0D0D;
   color: #ECF0F1;
 }
 
@@ -42,27 +42,27 @@ nav a.active { color:#A85C00; border-bottom:2px solid #ECF0F1; }
 }
 
 .menu-toggle { display:none; font-size:22px; color:#ECF0F1; background:none; border:none; }
-@media(max-width:768px){ nav { display:none; flex-direction:column; background:#111; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
+@media(max-width:768px){ nav { display:none; flex-direction:column; background:#0D0D0D; position:absolute; top:100%; left:0; right:0; } nav.open { display:flex; } .menu-toggle { display:block; } nav a, nav button { padding:15px; border-top:1px solid #333; } }
 
 /* ---------- HERO ---------- */
-.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECF0F1; text-align:center; overflow:hidden; z-index:1; background:#111; }
+.hero { height:400px; position:relative; display:flex; align-items:center; justify-content:center; color:#ECF0F1; text-align:center; overflow:hidden; z-index:1; background:#0D0D0D; }
 .hero-content { position:relative; z-index:2; }
 .cta-btn { padding:10px 20px; background:#A85C00; color:#ECF0F1; border:none; border-radius:5px; cursor:pointer; margin-top:5px; }
 .cta-btn:hover { background:#C97F00; }
 
 /* ---------- SECTIONS ---------- */
-section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; color:#ECF0F1; font-weight:bold; }
+section { padding:40px 20px; max-width:1200px; margin:auto; background:#0D0D0D; color:#ECF0F1; font-weight:bold; }
 .product-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
 .product { background:#2B2B2B; padding:15px; border-radius:8px; text-align:center; box-shadow:0 4px 8px rgba(0,0,0,.3); color:#ECF0F1; font-weight:bold; }
 .product h3, .product p, .product small { color:#ECF0F1; }
-.ask-expert-btn { margin-top:6px; width:100%; background:#111; color:#A85C00; border:1px solid #A85C00; padding:8px; font-size:12px; cursor:pointer; border-radius:5px; }
+.ask-expert-btn { margin-top:6px; width:100%; background:#0D0D0D; color:#A85C00; border:1px solid #A85C00; padding:8px; font-size:12px; cursor:pointer; border-radius:5px; }
 .ask-expert-btn:hover { background:#2B2B2B; border-color:#C97F00; color:#C97F00; }
 
 /* ---------- CART ---------- */
 #cart-count { background:#A85C00; padding:2px 6px; border-radius:50%; font-size:12px; }
 
 /* ---------- FOOTER ---------- */
-footer { text-align:center; padding:20px; background:#111; color:#2B2B2B; }
+footer { text-align:center; padding:20px; background:#0D0D0D; color:#2B2B2B; }
 
 /* ---------- ADMIN MODAL ---------- */
 .modal {
@@ -100,7 +100,7 @@ footer { text-align:center; padding:20px; background:#111; color:#2B2B2B; }
 /* ---------- CHATBOT ---------- */
 #chatbot-container { position:fixed; bottom:80px; right:20px; width:300px; background:#2B2B2B; border:2px solid #A85C00; border-radius:10px; padding:10px; color:#ECF0F1; font-size:13px; z-index:2000; display:flex; flex-direction:column; }
 #chatbot-toggle { position:fixed; bottom:20px; right:20px; background:#A85C00; color:#ECF0F1; border:none; border-radius:50%; width:60px; height:60px; font-size:24px; cursor:pointer; z-index:2000; }
-#chatbot-messages { background:#111; color:#ECF0F1; border-radius:8px; padding:10px; width:100%; height:200px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
+#chatbot-messages { background:#0D0D0D; color:#ECF0F1; border-radius:8px; padding:10px; width:100%; height:200px; overflow-y:auto; margin-bottom:5px; font-size:13px; }
 #chatbot-input, #chatbot-send { width:100%; padding:6px; margin-bottom:5px; border-radius:5px; border:none; }
 #chatbot-send { background:#A85C00; color:#ECF0F1; cursor:pointer; }
 #chatbot-send:hover { background:#C97F00; }
