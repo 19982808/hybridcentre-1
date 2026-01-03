@@ -115,44 +115,57 @@ document.addEventListener('DOMContentLoaded', async () => {
     msg += `-----------------%0ATOTAL: KES ${total}%0AVehicle: ___________%0ALocation: ___________%0A`;
     window.open(`https://wa.me/254780328599?text=${msg}`);
   };
+// ---------- ADMIN MODAL ----------
+const adminModal = document.getElementById('adminModal');
+const adminBtn = document.getElementById('adminLoginBtn');
+const closeAdmin = document.getElementById('closeAdmin');
 
-  // ---------- ADMIN MODAL ----------
-  const adminModal = document.getElementById('adminModal');
-  const adminBtn = document.getElementById('adminLoginBtn');
-  const closeAdmin = document.getElementById('closeAdmin');
-  adminBtn.onclick = () => adminModal.classList.remove('hidden-section');
-  closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
+// Open modal on button click
+adminBtn.onclick = () => adminModal.classList.remove('hidden-section');
 
-  const pname = document.getElementById('pname');
-  const pprice = document.getElementById('pprice');
-  const ptags = document.getElementById('ptags');
-  const pimage = document.getElementById('pimage');
-  const addProductBtn = document.getElementById('addProductBtn');
-  const adminList = document.getElementById('admin-list');
+// Close modal on close button
+closeAdmin.onclick = () => adminModal.classList.add('hidden-section');
 
-  window.renderAdmin = function() {
-    if (!adminList) return;
-    adminList.innerHTML = '';
-    products.forEach(p => {
-      adminList.innerHTML += `<li>${p.name} - KES ${p.price} - ${p.stock ? "In Stock" : "Out of Stock"}</li>`;
-    });
+// Optional: close modal by clicking outside content
+window.addEventListener('click', (e) => {
+  if (e.target === adminModal) {
+    adminModal.classList.add('hidden-section');
+  }
+});
+
+// Admin product list render
+const pname = document.getElementById('pname');
+const pprice = document.getElementById('pprice');
+const ptags = document.getElementById('ptags');
+const pimage = document.getElementById('pimage');
+const addProductBtn = document.getElementById('addProductBtn');
+const adminList = document.getElementById('admin-list');
+
+window.renderAdmin = function(products) {
+  if (!adminList) return;
+  adminList.innerHTML = '';
+  products.forEach(p => {
+    adminList.innerHTML += `<li>${p.name} - KES ${p.price} - ${p.stock ? "In Stock" : "Out of Stock"}</li>`;
+  });
+};
+
+// Add product
+addProductBtn.onclick = () => {
+  if (!pname.value || !pprice.value || !pimage.value) return alert('Please fill in name, price, and image');
+  const newProduct = {
+    id: products.length + 1,
+    name: pname.value,
+    price: parseFloat(pprice.value),
+    tags: ptags.value || "",
+    stock: true,
+    image: pimage.value
   };
+  products.push(newProduct);
+  renderProducts();
+  renderAdmin(products);
+  pname.value = pprice.value = ptags.value = pimage.value = '';
+};
 
-  addProductBtn.onclick = () => {
-    if (!pname.value || !pprice.value || !pimage.value) return alert('Please fill in name, price, and image');
-    const newProduct = {
-      id: products.length + 1,
-      name: pname.value,
-      price: parseFloat(pprice.value),
-      tags: ptags.value || "",
-      stock: true,
-      image: pimage.value
-    };
-    products.push(newProduct);
-    renderProducts();
-    renderAdmin();
-    pname.value = pprice.value = ptags.value = pimage.value = '';
-  };
 
   // ---------- LOAD PAGE FROM HASH ----------
   if (window.location.hash) showPage(window.location.hash);
