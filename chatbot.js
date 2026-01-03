@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
+// New Chatbot Functionality
+function initializeChatbot() {
   const toggle = document.getElementById('chatbot-toggle');
   const container = document.getElementById('chatbot-container');
   const closeBtn = document.getElementById('chatbot-close');
@@ -6,9 +7,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const input = document.getElementById('chatbot-input');
   const messages = document.getElementById('chatbot-messages');
 
+  // ===== Hide the chatbot initially =====
+  container.style.display = 'none'; // Ensure the chatbot is hidden on load
+
   // ===== Toggle chatbot =====
-  toggle.addEventListener('click', () => container.style.display = 'flex');
-  closeBtn.addEventListener('click', () => container.style.display = 'none');
+  toggle.addEventListener('click', () => {
+    container.style.display = 'flex'; // Show the chatbot when toggle is clicked
+  });
+  
+  closeBtn.addEventListener('click', () => {
+    container.style.display = 'none'; // Hide the chatbot when close button is clicked
+  });
 
   // ===== Send message =====
   function sendMessage() {
@@ -94,20 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
       addMessage('I did not understand. Type "products", "book", "location", or "contact".', 'ai-msg');
     }
   }
+}
 
-  // ===== SPA page navigation =====
-  function showPage(pageId) {
-    const pages = document.querySelectorAll('.page');
-    pages.forEach(p => p.classList.add('hidden-section'));
-    const target = document.getElementById(pageId);
-    if (target) target.classList.remove('hidden-section');
-    window.scrollTo(0, 0);
-    history.replaceState(null, '', `#${pageId}`);
-  }
-
-  // ===== Load page from URL hash =====
-  if (window.location.hash) {
-    const hash = window.location.hash.replace('#', '');
-    showPage(hash);
-  }
+// Initialize the chatbot functionality after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initializeChatbot(); // Call the function to set up the chatbot
 });
