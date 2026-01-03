@@ -32,9 +32,34 @@ section { padding:40px 20px; max-width:1200px; margin:auto; background:#111; col
 footer { text-align:center; padding:20px; background:#111; color:#2B2B2B; }
 
 /* ---------- ADMIN MODAL ---------- */
-.modal { position:fixed; inset:0; background:rgba(0,0,0,.9); display:flex; align-items:center; justify-content:center; z-index:2000; }
-.modal-content { background:#2B2B2B; padding:20px; width:90%; max-width:500px; border-radius:8px; max-height:90vh; overflow:auto; color:#ECF0F1; }
-.close { float:right; font-size:24px; cursor:pointer; color:#C97F00; }
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  display: none; /* hidden initially */
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-content {
+  background: #2B2B2B;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 8px;
+  max-height: 90vh;
+  overflow: auto;
+  color: #ECF0F1;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+  color: #C97F00;
+}
+
 #admin-list li { display:flex; align-items:center; justify-content:space-between; padding:5px 0; border-bottom:1px solid #333; }
 .edit-btn, .delete-btn { background:#A85C00; color:#ECF0F1; border:none; padding:4px 8px; margin-left:5px; border-radius:4px; cursor:pointer; font-size:12px; }
 .edit-btn:hover, .delete-btn:hover { background:#C97F00; }
