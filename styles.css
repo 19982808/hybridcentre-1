@@ -7,7 +7,7 @@ body { background:#1C1C1C; color:#ECF0F1; font-weight:bold; }
 nav a, nav button { color:#ECF0F1; background:none; border:none; margin-left:15px; cursor:pointer; font-weight:bold; }
 nav a.active { color:#A85C00; border-bottom:2px solid #ECF0F1; }
 .logo-container { display:flex; align-items:center; }
-.logo { height:80px; display:block; margin-right:10px; }
+.logo { height:200px; display:block; margin-right:10px; }
 .hero {
   height: 400px;
   position: relative;
